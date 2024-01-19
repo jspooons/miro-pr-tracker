@@ -1,12 +1,32 @@
-import React, {PropsWithChildren} from 'react';
-import Image from 'next/image';
+'use client'
+
+import '../assets/style.css';
+import React from 'react';
 import Script from 'next/script';
 
-import congratulations from '../assets/congratulations.png';
-import {SDKUsageDemo} from '../components/SDKUsageDemo';
 import {MiroSDKInit} from '../components/SDKInit';
 
-export default function RootLayout({children}: PropsWithChildren) {
+export default function RootLayout() {
+  
+  const [selectedTab, setSelectedTab] = React.useState("github");
+
+  const handleSelectTab = (value: string) => {
+    setSelectedTab(value);
+  };
+
+  const renderTab = () => {
+    switch (selectedTab) {
+      case "github":
+        return <></>;
+      case "miro":
+        return <></>;
+      case "sync":
+        return <></>;
+      default:
+        return <></>;
+    }
+  }
+
   return (
     <html>
       <body>
@@ -16,31 +36,33 @@ export default function RootLayout({children}: PropsWithChildren) {
         />
         <MiroSDKInit />
         <div id="root">
-          <div className="grid">
-            <div className="cs1 ce12">
-              <Image src={congratulations} alt="" />
-              <h1>Congratulations!</h1>
-              <p>You've just created your first Miro app!</p>
+          <div className="=cs1 ce12">
+            <div className="tabs">
+              <div className="tabs-header-list">
+                <div
+                  tabIndex={0}
+                  className={`tab ${selectedTab === "github" && "tab-active"}`}
+                  onClick={() => handleSelectTab("github")}
+                >
+                  <div className="tab-text tab-badge">Add Owners</div>
+                </div>
+                <div
+                  tabIndex={0}
+                  className={`tab ${selectedTab === "miro" && "tab-active"}`}
+                  onClick={() => handleSelectTab("miro")}
+                >
+                  <div className="tab-text tab-badge">Add Pr's</div>
+                </div>
+                <div
+                  tabIndex={0}
+                  className={`tab ${selectedTab === "sync" && "tab-active"}`}
+                  onClick={() => handleSelectTab("sync")}
+                >
+                  <div className="tab-text tab-badge">Sync Pr's</div>
+                </div>
+              </div>
             </div>
-            <div className="cs1 ce12">
-              <SDKUsageDemo />
-            </div>
-            <hr className="cs1 ce12" />
-            <div className="cs1 ce12">{children}</div>
-            <hr className="cs1 ce12" />
-            <div className="cs1 ce12">
-              <p>
-                To explore more and build your own app, see the Miro Developer
-                Platform documentation.
-              </p>
-              <a
-                className="button button-secondary"
-                target="_blank"
-                href="https://developers.miro.com"
-              >
-                Read the documentation
-              </a>
-            </div>
+            {renderTab()}
           </div>
         </div>
       </body>
