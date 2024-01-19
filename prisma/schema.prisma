@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Auth {
+  id          Int      @id @default(autoincrement())
+  miroUserId  String   @unique
+  gitToken    String   @unique
+  gitUserName String   @unique
+  createdAt   DateTime @default(now())
+  UpdatedAt   DateTime @updatedAt
+}
+
+model Dashboard {
+  id                  Int                   @id @default(autoincrement())
+  miroBoardId         String   
+  repoOwner           String   
+  repoOwnerType       String
+  createdAt           DateTime              @default(now())
+  UpdatedAt           DateTime              @updatedAt
+  pullRequestMapping  PullRequestMapping[]
+}
+
+model PullRequestMapping {
+  id                Int       @id @default(autoincrement())
+  dashboardId       Int
+  miroBoardId       String   
+  miroAppCardId     String    @unique
+  pullNumber        Int
+  repoName          String
+  createdAt         DateTime  @default(now())
+  UpdatedAt         DateTime  @updatedAt
+  dashboard         Dashboard @relation(fields: [dashboardId], references: [id])
+}

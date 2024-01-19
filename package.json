@@ -5,22 +5,30 @@
   "scripts": {
     "build": "next build",
     "start": "next dev",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:migrate": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' knex migrate:latest",
+    "db:migrate:undo": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' knex migrate:down",
+    "db:migrate:make": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' knex migrate:make"
   },
   "dependencies": {
-    "next": "14.0.1",
     "@mirohq/miro-api": "^2.0.0",
+    "@prisma/client": "^5.8.1",
+    "cookie": "^0.5.0",
+    "dotenv": "^16.0.3",
+    "knex": "^3.1.0",
     "mirotone": "5",
+    "next": "14.0.1",
+    "pg": "^8.11.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "dotenv": "^16.0.3",
-    "cookie": "^0.5.0"
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
     "@mirohq/websdk-types": "latest",
-    "typescript": "4.9.5",
+    "@types/cookie": "^0.5.1",
     "@types/node": "^18.8.2",
     "@types/react": "^18.0.24",
-    "@types/cookie": "^0.5.1"
+    "prisma": "^5.8.1",
+    "typescript": "4.9.5"
   }
 }

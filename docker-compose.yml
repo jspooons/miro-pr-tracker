@@ -1,0 +1,10 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - 3001:5432
+    expose:
+      - 3001
+    environment:
+      POSTGRES_DB: github-pr-tracker
+      POSTGRES_HOST_AUTH_METHOD: trust
