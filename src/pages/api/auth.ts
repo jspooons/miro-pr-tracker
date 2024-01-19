@@ -6,7 +6,7 @@ import axios from 'axios';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     const { miroUserId, gitToken } = request.body;
-
+    
     if (request.method === 'POST') {
         try {
             const accountDetailsResult = await axios.get(`https://api.github.com/user`, {
