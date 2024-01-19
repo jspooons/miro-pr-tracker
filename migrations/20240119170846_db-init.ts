@@ -13,20 +13,22 @@ export async function up(knex: Knex): Promise<void> {
 
     await knex.schema.createTable('Dashboard', function (table) {
         table.increments('id').primary();
-        table.string('miroBoardId');
-        table.string('repoOwner');
-        table.string('repoOwnerType');
+        table.string('miroBoardId').notNullable();
+        table.string('repoOwner').notNullable();
+        table.string('repoOwnerType').notNullable();
         table.timestamp('createdAt').defaultTo(knex.fn.now());
         table.timestamp('UpdatedAt').defaultTo(knex.fn.now());
+
+        table.unique(['miroBoardId', 'repoOwner', 'repoOwnerType']);
     });
 
     await knex.schema.createTable('PullRequestMapping', function (table) {
         table.increments('id').primary();
-        table.integer('dashboardId');
-        table.string('miroBoardId');
+        table.integer('dashboardId').notNullable();
+        table.string('miroBoardId').notNullable();
         table.string('miroAppCardId').unique();
-        table.integer('pullNumber');
-        table.string('repoName');
+        table.integer('pullNumber').notNullable();
+        table.string('repoName').notNullable();
         table.timestamp('createdAt').defaultTo(knex.fn.now());
         table.timestamp('UpdatedAt').defaultTo(knex.fn.now());
       

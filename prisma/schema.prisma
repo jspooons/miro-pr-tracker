@@ -26,12 +26,14 @@ model Dashboard {
   repoOwnerType       String
   createdAt           DateTime              @default(now())
   UpdatedAt           DateTime              @updatedAt
+
+  @@unique([miroBoardId, repoOwner, repoOwnerType])
   pullRequestMapping  PullRequestMapping[]
 }
 
 model PullRequestMapping {
   id                Int       @id @default(autoincrement())
-  dashboardId       Int
+  dashboardId       Int       
   miroBoardId       String   
   miroAppCardId     String    @unique
   pullNumber        Int
