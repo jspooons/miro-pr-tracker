@@ -2,25 +2,50 @@
 
 import * as React from 'react';
 import Image from 'next/image';
+import axios from 'axios';
 
 import pullRequestTrackerInitial from '../assets/PullRequestTrackerInitial.png';
 
 
 export const GitManager: React.FC = () => {
 
-    const [token, setToken] = React.useState<string>();
+    const [gitToken, setGitToken] = React.useState<string>();
     const [repoOwner, setRepoOwner] = React.useState<string>();
     const [isRepoOwnerUser, setIsRepoOwnerUser] = React.useState<boolean>(true);
     const [isRepoOwnerOrg, setIsRepoOwnerOrg] = React.useState<boolean>(false);
 
-    const handleSubmitToken = (event: React.FormEvent<HTMLFormElement>) => {};
+    const handleSubmitToken = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        const miroUserId = (await miro.board.getUserInfo()).id;
+        
+        await axios.post(`/api/auth`, {
+            miroUserId,
+            gitToken
+        });
 
-    const handleSubmitRepoOwner = (event: React.FormEvent<HTMLFormElement>) => {};
+        setGitToken("");
+    };
+
+    const handleSubmitRepoOwner = async (event: any) => {
+        event.preventDefault();
+    
+        const miroBoardId = (await miro.board.getInfo()).id;
+        const repoOwnerType = isRepoOwnerUser && !isRepoOwnerOrg ? "user" : "org";
+        
+        await axios.post(`/api/dashboard`, {
+          repoOwner,
+          repoOwnerType,
+          miroBoardId
+        });
+
+        setRepoOwner("");
+        setIsRepoOwnerOrg(false);
+    };
 
     const handleRadioButtons = () => {
         setIsRepoOwnerUser(!isRepoOwnerUser);
         setIsRepoOwnerOrg(!isRepoOwnerOrg);
-    }
+    };
 
     return (
         <div>
@@ -35,8 +60,8 @@ export const GitManager: React.FC = () => {
                         type="text"
                         id="github-token"
                         placeholder="Enter your token"
-                        value={token}
-                        onChange={(event) => setToken(event.target.value)}
+                        value={gitToken}
+                        onChange={(event) => setGitToken(event.target.value)}
                     />
                     <button type="submit" className="button button-primary">
                         Add Personal Access Token
