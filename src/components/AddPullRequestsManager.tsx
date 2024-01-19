@@ -18,7 +18,16 @@ export const PullRequestManager: React.FC = () => {
     const [repoOwners, setRepoOwners] = React.useState<RepoOwner[]>();
     const [selectedRepoOwner, setSelectedRepoOwner] = React.useState<RepoOwner>({name: "", repoOwnerType: ""});
 
-    const handleClick = async () => {};
+    const handleClick = async () => {
+        if (await miro.board.ui.canOpenModal()) {
+            await miro.board.ui.openModal({
+                url: `/addPullRequest`,
+                width: 600,
+                height: 400,
+                fullscreen: false,
+              });
+        }
+    };
 
     const onSelect = (event: any) => {
         event.target.checked && setSelectedRepoOwner(event.target.value);
@@ -39,7 +48,7 @@ export const PullRequestManager: React.FC = () => {
     return (
         <div>
             <Image src={addPullRequests} alt="" />
-            <p>Your tracked repository owners can be found here. Select one and click the 'Select Pull Requests' button to select some Pull Requests to track.</p>
+            <p className="paragraph">Your tracked repository owners can be found here. Select one and click the 'Select Pull Requests' button to select some Pull Requests to track.</p>
             <div>
             { repoOwners ? 
                 <table className="table">

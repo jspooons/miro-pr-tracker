@@ -23,10 +23,7 @@ img {
 }
 
 p {
-  font-size: 14px;
-  line-height: normal;
-  margin-bottom: 20px;
-  text-align: justify;
+  margin: 0;
 }
 
 /*
@@ -42,6 +39,19 @@ p {
 
 .form-item {
   margin-bottom: var(--space-small);
+}
+
+/*
+
+  explanation text
+
+*/
+
+.paragraph {
+  font-size: 14px;
+  line-height: normal;
+  margin-bottom: 20px;
+  text-align: justify;
 }
 
 /*

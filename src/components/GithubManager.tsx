@@ -50,7 +50,7 @@ export const GitManager: React.FC = () => {
     return (
         <div>
             <Image src={pullRequestTrackerInitial} alt="" />
-            <p>Add Github Pull Requests to your Miro Board and track their status. To get started, generate your token on Github and enter it below. Then set the repository owner and owner type below to begin!</p>
+            <p className="paragraph">Add Github Pull Requests to your Miro Board and track their status. To get started, generate your token on Github and enter it below. Then set the repository owner and owner type below to begin!</p>
             <hr />
             <form className="grid" onSubmit={handleSubmitToken}>
                 <div className="form-group cs1 ce12">
