@@ -6,6 +6,8 @@ import Script from 'next/script';
 
 import {MiroSDKInit} from '../components/SDKInit';
 import { GitManager } from '../components/GithubManager';
+import { PullRequestManager } from '../components/AddPullRequestsManager';
+import { SyncPullRequestsManager } from '../components/SyncPullRequestsManager';
 
 export default function RootLayout() {
   
@@ -19,10 +21,10 @@ export default function RootLayout() {
     switch (selectedTab) {
       case "github":
         return <GitManager/>;
-      case "miro":
-        return <></>;
+      case "pullRequests":
+        return <PullRequestManager/>;
       case "sync":
-        return <></>;
+        return <SyncPullRequestsManager/>;
       default:
         return <GitManager/>;
     }
@@ -49,8 +51,8 @@ export default function RootLayout() {
                 </div>
                 <div
                   tabIndex={0}
-                  className={`tab ${selectedTab === "miro" && "tab-active"}`}
-                  onClick={() => handleSelectTab("miro")}
+                  className={`tab ${selectedTab === "pullRequests" && "tab-active"}`}
+                  onClick={() => handleSelectTab("pullRequests")}
                 >
                   <div className="tab-text tab-badge">Add Pr's</div>
                 </div>
