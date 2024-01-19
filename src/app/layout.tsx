@@ -5,6 +5,7 @@ import React from 'react';
 import Script from 'next/script';
 
 import {MiroSDKInit} from '../components/SDKInit';
+import { GitManager } from '../components/GithubManager';
 
 export default function RootLayout() {
   
@@ -17,13 +18,13 @@ export default function RootLayout() {
   const renderTab = () => {
     switch (selectedTab) {
       case "github":
-        return <></>;
+        return <GitManager/>;
       case "miro":
         return <></>;
       case "sync":
         return <></>;
       default:
-        return <></>;
+        return <GitManager/>;
     }
   }
 
