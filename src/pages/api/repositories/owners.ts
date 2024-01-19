@@ -10,7 +10,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         try {
             if (!miroBoardId || Array.isArray(miroBoardId)) {
                 return response.status(400).json({ error: 'Invalid or missing miroBoardId' });
-              }
+            }
 
             const dashboardResponse = await db.dashboard.findMany({
                 where: {

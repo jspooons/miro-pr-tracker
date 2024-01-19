@@ -21,7 +21,7 @@ export const PullRequestManager: React.FC = () => {
     const handleClick = async () => {
         if (await miro.board.ui.canOpenModal()) {
             await miro.board.ui.openModal({
-                url: `/addPullRequest`,
+                url: `/addPullRequests?repoOwner=${selectedRepoOwner.name}&repoOwnerType=${selectedRepoOwner.repoOwnerType}`,
                 width: 600,
                 height: 400,
                 fullscreen: false,
