@@ -40,6 +40,7 @@ export const PullRequestManager: React.FC = () => {
         <div>
             <Image src={addPullRequests} alt="" />
             <p>Your tracked repository owners can be found here. Select one and click the 'Select Pull Requests' button to select some Pull Requests to track.</p>
+            <div>
             { repoOwners ? 
                 <table className="table">
                     <thead>
@@ -77,6 +78,7 @@ export const PullRequestManager: React.FC = () => {
                     <div className="spinner"/>
                 </div>
             }
+            </div>
             <button
                 className="cs1 ce12 button button-primary"
                 type="submit"

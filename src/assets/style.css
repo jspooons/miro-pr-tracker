@@ -51,10 +51,12 @@ p {
 */
 
 .spinner-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 10px;
+  margin-bottom: 30px;
 }
 
 .spinner {
@@ -67,4 +69,9 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
