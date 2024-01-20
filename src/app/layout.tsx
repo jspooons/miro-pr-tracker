@@ -6,7 +6,7 @@ import Script from 'next/script';
 
 import {MiroSDKInit} from '../components/SDKInit';
 import { GitManager } from '../components/GithubManager';
-import { PullRequestManager } from '../components/addPullRequest/AddPullRequestsManager';
+import { PullRequestManager } from '../components/AddPullRequestsManager';
 import { SyncPullRequestsManager } from '../components/SyncPullRequestsManager';
 
 export default function RootLayout() {
