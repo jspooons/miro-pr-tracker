@@ -3,10 +3,10 @@
 import * as React from 'react';
 import Image from 'next/image';
 
-import '../../assets/style.css';
-import addPullRequests from '../../assets/addPullRequests.png';
+import '../assets/style.css';
+import addPullRequests from '../assets/addPullRequests.png';
 import axios from 'axios';
-import { RepoOwner } from '../types';
+import { RepoOwner } from './types';
 
 
 export const PullRequestManager: React.FC = () => {
@@ -47,37 +47,39 @@ export const PullRequestManager: React.FC = () => {
             <p className="paragraph">Your tracked repository owners can be found here. Select one and click the 'Select Pull Requests' button to select some Pull Requests to track.</p>
             <div>
             { repoOwners ? 
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Repository Owner</th>
-                            <th>Owner Type</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        repoOwners.map((repoOwner: RepoOwner) => (
+                <div className="table-container">
+                    <table className="table">
+                        <thead>
                             <tr>
-                                <td>
-                                    <input 
-                                        type="radio" 
-                                        className="radio"
-                                        onClick={(event: any) => onSelect(event, repoOwner)}
-                                        checked={selectedRepoOwner.name === repoOwner.name}
-                                    />
-                                </td>
-                                <td>
-                                    <p>{repoOwner.name}</p>
-                                </td>
-                                <td>
-                                    <p>{repoOwner.repoOwnerType}</p>
-                                </td>
+                                <th></th>
+                                <th>Repository Owner</th>
+                                <th>Owner Type</th>
                             </tr>
-                        ))
-                    }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {
+                            repoOwners.map((repoOwner: RepoOwner) => (
+                                <tr>
+                                    <td>
+                                        <input 
+                                            type="radio" 
+                                            className="radio"
+                                            onClick={(event: any) => onSelect(event, repoOwner)}
+                                            checked={selectedRepoOwner.name === repoOwner.name}
+                                        />
+                                    </td>
+                                    <td>
+                                        <p>{repoOwner.name}</p>
+                                    </td>
+                                    <td>
+                                        <p>{repoOwner.repoOwnerType}</p>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                        </tbody>
+                    </table>
+                </div>
                 : 
                 <div className="spinner-container">
                     <div className="spinner"/>

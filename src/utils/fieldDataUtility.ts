@@ -8,7 +8,7 @@ enum PrStatus {
     MERGED = "Merged"
 }
 
-export async function getPullRequest(repoOwner: string, repoName: string, pullNumber: number, accessToken: string) {
+async function getPullRequest(repoOwner: string, repoName: string, pullNumber: number, accessToken: string) {
     try {
         const response = await axios.get(`https://api.github.com/repos/${repoOwner}/${repoName}/pulls/${pullNumber}`, {
             headers: {
@@ -23,7 +23,7 @@ export async function getPullRequest(repoOwner: string, repoName: string, pullNu
     }
 }
 
-export async function getPullRequestReviews(repoOwner: string, repoName: string, pullNumber: number, accessToken: string) {
+async function getPullRequestReviews(repoOwner: string, repoName: string, pullNumber: number, accessToken: string) {
     try {
         const response = await axios.get(`https://api.github.com/repos/${repoOwner}/${repoName}/pulls/${pullNumber}/reviews`, {
             headers: {
@@ -38,7 +38,7 @@ export async function getPullRequestReviews(repoOwner: string, repoName: string,
     }
 }
 
-export async function getPullRequestComments(repoOwner: string, repoName: string, pullNumber: number, accessToken: string) {
+async function getPullRequestComments(repoOwner: string, repoName: string, pullNumber: number, accessToken: string) {
     try {
         const response = await axios.get(`https://api.github.com/repos/${repoOwner}/${repoName}/pulls/${pullNumber}/comments`, {
             headers: {
@@ -53,7 +53,7 @@ export async function getPullRequestComments(repoOwner: string, repoName: string
     }
 }
 
-export function getPullRequestCustomStatus(numReviews: number, mergedBy: any, isOpen: string) {
+function getPullRequestCustomStatus(numReviews: number, mergedBy: any, isOpen: string) {
     if (isOpen === "open") {
         if (numReviews === 0) {
             return PrStatus.NO_REVIEWS;
@@ -69,7 +69,7 @@ export function getPullRequestCustomStatus(numReviews: number, mergedBy: any, is
     }
 }
 
-export function filterPullRequestReviews(reviews: any, maxReviews: number) {
+function filterPullRequestReviews(reviews: any, maxReviews: number) {
     // only return unique reviews, for duplicates return the most recent according to submitted_at
     const uniqueReviews: Record<string, any> = {};
 
@@ -96,4 +96,23 @@ export function filterPullRequestReviews(reviews: any, maxReviews: number) {
     });
 
     return finalReviews;
+}
+
+export async function getFieldData(repoOwner: string, repoName: string, pullNumber: number, gitToken: string) {
+    const pullRequest = await getPullRequest(repoOwner, repoName, pullNumber, gitToken);
+    const reviews = await getPullRequestReviews(repoOwner, repoName, pullNumber, gitToken);
+    const comments = await getPullRequestComments(repoOwner, repoName, pullNumber, gitToken);
+    const filteredReviews = filterPullRequestReviews(reviews, 14);
+
+    return {
+        title: pullRequest.title,
+        author: pullRequest.user.login,
+        numFilesChanged: pullRequest.changed_files,
+        numComments: reviews.length + comments.length,
+        additions: pullRequest.additions,
+        deletions: pullRequest.deletions,
+        reviews: filteredReviews,
+        customStatus: getPullRequestCustomStatus(reviews.length, pullRequest.merged_by, pullRequest.state),
+        createdAt: pullRequest.created_at
+    };
 }

@@ -1,33 +1,8 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import db from '../../../modules/db';
-import { filterPullRequestReviews, getPullRequest, getPullRequestReviews, getPullRequestComments, getPullRequestCustomStatus } from '../../../utils/fieldDataUtility';
+import { getFieldData } from '../../../utils/fieldDataUtility';
+import { getAuthResult } from '../../../utils/utility';
 
-async function getFieldData(repoOwner: string, repoName: string, pullNumber: number, gitToken: string) {
-    const pullRequest = await getPullRequest(repoOwner, repoName, pullNumber, gitToken);
-    const reviews = await getPullRequestReviews(repoOwner, repoName, pullNumber, gitToken);
-    const comments = await getPullRequestComments(repoOwner, repoName, pullNumber, gitToken);
-    const filteredReviews = filterPullRequestReviews(reviews, 14);
-
-    return {
-        title: pullRequest.title,
-        author: pullRequest.user.login,
-        numFilesChanged: pullRequest.changed_files,
-        numComments: reviews.length + comments.length,
-        additions: pullRequest.additions,
-        deletions: pullRequest.deletions,
-        reviews: filteredReviews,
-        customStatus: getPullRequestCustomStatus(reviews.length, pullRequest.merged_by, pullRequest.state),
-        createdAt: pullRequest.created_at
-    };
-}
-
-async function getAuthResult(miroUserId: string) {
-    const authResult = await db.auth.findUnique({ where: { miroUserId } });
-    if (!authResult) {
-        throw new Error("No dashboard or auth entry found");
-    }
-    return authResult;
-}
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     if (request.method === 'POST') {

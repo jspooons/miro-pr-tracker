@@ -18,6 +18,25 @@ export const MiroSDKInit = () => {
         }
       });
     });
+
+    miro.board.ui.on("app_card:open", (event) => {
+      const { appCard } = event;
+      let currentStatus;
+  
+      if (appCard.fields) {
+        currentStatus = appCard.fields[0].value;
+      }
+  
+      // Fetch a specific app card by specifying its ID
+      const url = `/editPullRequest?miroAppCardId=${appCard.id}?currentStatus=${currentStatus}`;
+  
+      // Open the modal to display the content of the fetched app card
+      miro.board.ui.openModal({
+        url,
+        width: 520,
+        height: 570,
+      });
+    });
   });
 
   return null;

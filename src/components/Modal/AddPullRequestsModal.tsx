@@ -6,11 +6,11 @@ import '../../assets/style.css'
 
 import Select from '../utility/Select';
 import Checkbox from '../utility/Checkbox';
-import { GithubRepo, GithubPullRequest } from '../types';
+import { GithubRepo, GithubPullRequest, AddPullRequestModalProps } from '../types';
 import { insertGithubAppCards } from '../utility/appCardsUtility';
 
 
-export const AddPullRequestModal: React.FC<{ repoOwner: string, repoOwnerType: string, miroUserId: string }> = ( { repoOwner, repoOwnerType, miroUserId } ) => {
+export const AddPullRequestsModal: React.FC<AddPullRequestModalProps> = ( { repoOwner, repoOwnerType, miroUserId } ) => {
     
     const [githubRepositories, setGithubRepositories] = React.useState<GithubRepo[]>([]);
     const [selectedGithubRepo, setSelectedGithubRepo] = React.useState<GithubRepo>({name: "", pullRequests: []});

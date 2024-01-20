@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { AddPullRequestModal } from "../components/addPullRequest/AddPullRequestModal";
+import { AddPullRequestsModal } from "../components/Modal/AddPullRequestsModal";
 import Head from 'next/head';
 
 
@@ -30,7 +30,7 @@ export default function Main() {
         <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
       </Head>
       <div>
-          <AddPullRequestModal repoOwner={repoOwner} repoOwnerType={repoOwnerType} miroUserId={miroUserId}/>
+          <AddPullRequestsModal repoOwner={repoOwner} repoOwnerType={repoOwnerType} miroUserId={miroUserId}/>
       </div>
     </div>
   );
