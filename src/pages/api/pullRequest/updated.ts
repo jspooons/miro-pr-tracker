@@ -2,6 +2,7 @@ import {NextApiRequest, NextApiResponse} from 'next';
 import { validateStringParam } from '../../../utils/utility';
 import { getFieldData } from '../../../utils/fieldDataUtility';
 import { getAuthResult } from '../../../utils/utility';
+import prisma from '../../../modules/db'
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     if (request.method === 'GET') {

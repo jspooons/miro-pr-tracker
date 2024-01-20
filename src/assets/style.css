@@ -140,10 +140,128 @@ p {
 */
 
 .subheader {
-  margin-left: 25px
+  margin-left: 25px;
+  margin-bottom: 5px;
 }
 
 .description {
-  background-color: lightgrey;
+  background-color: rgb(225, 223, 223);
   padding: 5px 5px 5px 5px;
+  font-size: 13px;
+  border-radius: 5px;
 }
+
+.files-added {
+  color: #525252;
+  background-color: #cfcfcf;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.addition {
+  color: #a5e8b7;
+  background-color: #0fb509;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.deletion {
+  color: #e6aba3;
+  background-color: #cf1e06;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.comments {
+  color: #c70494;
+  background-color: #f7bae7;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.approved {
+  color: #0d750d;
+  background-color: #a5e8b7;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.changes-requested {
+  color: #e6c300;
+  background-color: #f5deb3;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.commented {
+  color: #FFA500;
+  background-color: #f5deb3;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.closed {
+  color: #FF0000;
+  background-color: #e6aba3;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.no-review {
+  color: #525252;
+  background-color: #b8b8b8;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.in-review {
+  color: #002eab;
+  background-color: #a8c0ff;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.merged {
+  color: #5a00a3;
+  background-color: #d8a8ff;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.new {
+  color: #0d750d;
+  background-color: #a5e8b7;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.mid {
+  color: #FFA500;
+  background-color: #f5deb3;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.old {
+  color: #FF0000;
+  background-color: #e6aba3;
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
+.icon {
+  align-items: center;
+  height: 15px;
+  width: auto;
+  transform: translateY(3px);
+  display: inline;
+  padding-right: 5px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
+  gap: 20px;  /* Adjust the gap between items as needed */
+}
+

@@ -1,3 +1,5 @@
+import prisma from '../modules/db'
+
 export function validateStringParam(param: string | string[] | undefined, paramName: string): string {
     if (!param && Array.isArray(param)) {
         throw new Error(`Invalid or missing ${paramName}`);

@@ -8,6 +8,7 @@ import { EditPullRequestModalProps } from '../types';
 import { AppCard } from '@mirohq/websdk-types';
 import { getDaysSincePullRequestCreation } from '../../utils/appCardFieldsUtility';
 
+import { Changes, Description, Info, Reviewers, Status } from './editPullRequestModalUtility';
 
 //@ts-ignore
 export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { miroAppCardId, currentStatus } ) => {
@@ -94,20 +95,26 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
 
     return (
         <div>
-            <div>
-                <h2>{title}</h2>
-                <h3 className="">Description</h3>
-                <p className="description">{description}</p>
-            </div>
-            <div>
-                { isLoading ? 
-                    <div className="central-spinner-container"><div className="spinner"></div></div> 
-                    : 
-                    <div>
-
+            { isLoading ? 
+                <div className="central-spinner-container"><div className="spinner"></div></div> 
+                : 
+                <div>
+                    <h2>{title}</h2>
+                    <Description description={description} createdAt={fieldData[0].value} />
+                    <div className="grid-container">
+                        <Changes fileChanges={fieldData[1].value} additions={fieldData[2].value} deletions={fieldData[3].value}/>
+                        <Info numComments={fieldData[4].value}/>
+                        <Status status={fieldData[5].value}/>
+                        <Reviewers reviewers={reviewers}/>
+                        <button type="button" className="button button-primary" disabled={!isOutOfSync}>
+                            Sync Pull Request
+                        </button>
+                        <button type="button" className="button button-third">
+                            Add Approver
+                        </button>
                     </div>
-                }
-            </div>
+                </div>
+            }
         </div>
     )
 }

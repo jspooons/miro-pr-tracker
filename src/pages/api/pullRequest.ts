@@ -3,6 +3,8 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import { validateStringParam } from '../../utils/utility';
 
+import prisma from '../../modules/db'
+
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
 

@@ -1,0 +1,12 @@
+export const ADDITIONS = "https://cdn-icons-png.flaticon.com/512/992/992651.png";
+export const DELETIONS = "https://cdn-icons-png.flaticon.com/512/66/66889.png";
+export const FILES_ADDED = "https://cdn-icons-png.flaticon.com/512/1090/1090923.png";
+export const COMMENTS = "https://cdn-icons-png.flaticon.com/512/2190/2190552.png";
+export const SANDTIMER = "https://cdn-icons-png.flaticon.com/512/2027/2027595.png";
+export const APPROVED = "https://cdn-icons-png.flaticon.com/512/3002/3002398.png";
+export const CHANGES_REQUESTED = "https://cdn-icons-png.flaticon.com/512/3591/3591279.png";
+export const COMMENTED = "https://cdn-icons-png.flaticon.com/512/4526/4526877.png";
+export const CLOSED = "https://cdn-icons-png.flaticon.com/512/10990/10990611.png";
+export const NO_REVIEW = "https://cdn-icons-png.flaticon.com/512/11441/11441066.png";
+export const IN_REVIEW = "https://cdn-icons-png.flaticon.com/512/428/428094.png";
+export const MERGED = "https://cdn-icons-png.flaticon.com/512/6577/6577243.png";

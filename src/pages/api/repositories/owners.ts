@@ -2,6 +2,8 @@
 
 import {NextApiRequest, NextApiResponse} from 'next';
 
+import prisma from '../../../modules/db'
+
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     const { miroBoardId }  = request.query;
     

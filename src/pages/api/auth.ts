@@ -3,6 +3,8 @@
 import {NextApiRequest, NextApiResponse} from 'next';
 import axios from 'axios';
 
+import prisma from '../../modules/db'
+
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     const { miroUserId, gitToken } = request.body;
     

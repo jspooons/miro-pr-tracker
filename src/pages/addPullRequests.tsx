@@ -28,7 +28,7 @@ export default function Main() {
   return (
     <>
       <Head>
-        <Script src="https://miro.com/app/static/sdk/v2/miro.js"></Script>
+        <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
       </Head>
       <div>
           <AddPullRequestsModal repoOwner={repoOwner} repoOwnerType={repoOwnerType} miroUserId={miroUserId}/>
