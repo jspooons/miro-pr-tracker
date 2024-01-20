@@ -5,7 +5,7 @@ export const COMMENTS = "https://cdn-icons-png.flaticon.com/512/2190/2190552.png
 export const SANDTIMER = "https://cdn-icons-png.flaticon.com/512/2027/2027595.png";
 
 enum PrStatusColorPrimary {
-    APPROVED = "#00FF00",
+    APPROVED = "#0d750d",
     CHANGES_REQUESTED = "#e6c300",
     COMMENTED = "#FFA500",
   
@@ -27,7 +27,7 @@ enum PrStatusColorSecondary {
   }
   
 enum CreationDateStatusPrimary {
-    GREEN = "#00FF00",
+    GREEN = "#0d750d",
     AMBER = "#FFA500",
     RED = "#FF0000"
   }
@@ -92,7 +92,7 @@ export const createFields = (data: any) => {
         value: `${additions}`,
         iconUrl: ADDITIONS,
         iconShape: "square",
-        fillColor: "#1fb547",
+        fillColor: "#085708",
         textColor: "#a5e8b7",
       },
       {
