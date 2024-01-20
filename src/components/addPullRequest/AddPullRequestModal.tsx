@@ -20,15 +20,12 @@ export const AddPullRequestModal: React.FC<AddPullRequestModalProps> = ( { repoO
     const getGithubRepositories = async () => {
         try {
             setIsLoading(true);
-            console.log(repoOwner);
-            console.log(repoOwnerType);
             const results = await axios.get(`/api/repositories?miroUserId=${miroUserId}&repoOwner=${repoOwner}&repoOwnerType=${repoOwnerType}`);
             const repos = results.data.repositories;
-            console.log(results);
             setGithubRepositories(repos);
             setSelectedGithubRepo(repos[0]);
         } catch (error) {
-            console.log(error);
+            console.error(error);
         } finally {
             setIsLoading(false); 
         }

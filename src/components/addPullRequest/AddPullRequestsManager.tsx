@@ -33,7 +33,6 @@ export const PullRequestManager: React.FC = () => {
     const getRepositoryOwners = async () => {
         const miroBoardId = (await miro.board.getInfo()).id;
         const results = await axios.get(`/api/repositories/owners?miroBoardId=${miroBoardId}`);
-        console.log(results);
         setRepoOwners(results.data);
         setSelectedRepoOwner(results.data[0]);
     };
