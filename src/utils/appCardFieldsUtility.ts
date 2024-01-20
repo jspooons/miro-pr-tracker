@@ -38,7 +38,7 @@ enum CreationDateStatusPrimary {
     RED = "#e6aba3"
   }
 
-enum PrStatus {
+export enum PrStatus {
     // pr review statuses
     APPROVED = "APPROVED",
     CHANGES_REQUESTED = "CHANGES_REQUESTED",
@@ -51,7 +51,7 @@ enum PrStatus {
     MERGED = "Merged"
 }
 
-enum PrStatusIcons {
+export enum PrStatusIcons {
     APPROVED = "https://cdn-icons-png.flaticon.com/512/3002/3002398.png",
     CHANGES_REQUESTED = "https://cdn-icons-png.flaticon.com/512/3591/3591279.png",
     COMMENTED = "https://cdn-icons-png.flaticon.com/512/4526/4526877.png",

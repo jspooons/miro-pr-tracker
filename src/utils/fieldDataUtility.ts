@@ -3,7 +3,7 @@ import axios from "axios";
 enum PrStatus {
     // for custom status for miro
     CLOSED = "Closed",
-    NO_REVIEWS = "No Reviews",
+    NO_REVIEW = "No Review",
     IN_REVIEW = "In Review",
     MERGED = "Merged"
 }
@@ -56,7 +56,7 @@ async function getPullRequestComments(repoOwner: string, repoName: string, pullN
 function getPullRequestCustomStatus(numReviews: number, mergedBy: any, isOpen: string) {
     if (isOpen === "open") {
         if (numReviews === 0) {
-            return PrStatus.NO_REVIEWS;
+            return PrStatus.NO_REVIEW;
         } else {
             return PrStatus.IN_REVIEW;
         }

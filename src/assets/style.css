@@ -249,6 +249,11 @@ p {
   border-radius: 3px;
 }
 
+.default-option {
+  padding: 1px 3px 1px 3px;
+  border-radius: 3px;
+}
+
 .icon {
   align-items: center;
   height: 15px;

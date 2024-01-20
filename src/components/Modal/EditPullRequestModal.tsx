@@ -13,10 +13,10 @@ import { Changes, Description, Info, Reviewers, Status } from './editPullRequest
 //@ts-ignore
 export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { miroAppCardId, currentStatus } ) => {
 
-    const [isOutOfSync, setIsOutOfSync] = React.useState<boolean>();
+    const [isOutOfSync, setIsOutOfSync] = React.useState<boolean>(false);
+    const [descriptionData, setDescriptionData] = React.useState<any>();
     const [fieldData, setFieldData] = React.useState<any>();
     const [title, setTitle] = React.useState<string>();
-    const [description, setDescription] = React.useState<string>();
     const [reviewers, setReviewers] = React.useState<string[]>();
     const [isLoading, setIsLoading] = React.useState(true);
 
@@ -25,12 +25,10 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
         const miroFieldData = formatMiroFieldData(appCard);
 
         setTitle(appCard.title);
-        setDescription(appCard.description);
         setFieldData(miroFieldData);
         setReviewers(miroFieldData.slice(6));
 
-        if (githubFlattenedFieldData.title !== miroFieldData.title ||
-            githubFlattenedFieldData.description !== miroFieldData.description) {
+        if (githubFlattenedFieldData.title !== miroFieldData.title) {
             return true;
         }
 
@@ -44,10 +42,20 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     }
 
     const flattenGithubFieldData = (githubFieldData: any) => {
+
+        setDescriptionData({
+            author:  githubFieldData.author,
+            createdAt: githubFieldData.createdAt,
+            pullNumber: githubFieldData.pullNumber,
+            repoName: githubFieldData.repoName,
+            repoOwner: githubFieldData.repoOwner
+        });
+
+        console.log("DD",reviewers);
+
         return {
             title: githubFieldData.title,
             author: githubFieldData.author,
-            description: `Created by ${githubFieldData.author} on ${githubFieldData.createdAt}, as a part of pull request #${githubFieldData.pullNumber}; for ${githubFieldData.repoName}, owned by ${githubFieldData.repoOwner}.`,
             value: [
                 // this is in a specific order, matching the order of the fields created initially, see appCardFieldsUtility.ts
                 {value: `${getDaysSincePullRequestCreation(new Date(githubFieldData.createdAt))}d`},
@@ -66,6 +74,9 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     const formatMiroFieldData = (appCard: any) => {
         const miroFieldData = appCard.fields.map((field: any) => ({
             value: field.value,
+            iconUrl: field.iconUrl,
+            fillColor: field.fillColor,
+            textColor: field.textColor
         }));
 
         return miroFieldData;
@@ -87,11 +98,11 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
       }, [miroAppCardId]);
 
     React.useEffect(() => {
-        if (isOutOfSync !== undefined && fieldData && title && description && reviewers) {
+        if (fieldData && title && reviewers && descriptionData) {
             setIsLoading(false);
         }
-    }, [isOutOfSync, fieldData, title, description, reviewers]);
-    
+    }, [fieldData, title, reviewers, descriptionData]);
+
 
     return (
         <div>
@@ -100,7 +111,7 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
                 : 
                 <div>
                     <h2>{title}</h2>
-                    <Description description={description} createdAt={fieldData[0].value} />
+                    <Description descriptionData={descriptionData}/>
                     <div className="grid-container">
                         <Changes fileChanges={fieldData[1].value} additions={fieldData[2].value} deletions={fieldData[3].value}/>
                         <Info numComments={fieldData[4].value}/>
