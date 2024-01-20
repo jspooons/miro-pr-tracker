@@ -68,7 +68,7 @@ export const AddPullRequestModal: React.FC<{ repoOwner: string, repoOwnerType: s
         <div>
             <h2>Choose from Github</h2>
             {isLoading ? 
-                <div className="spinner-container"><div className="spinner"></div></div> : 
+                <div className="central-spinner-container"><div className="spinner"></div></div> : 
                 <>
                     <Select
                         label="Select Github Pull Request"
