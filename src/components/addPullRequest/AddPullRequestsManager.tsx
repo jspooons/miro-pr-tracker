@@ -26,8 +26,8 @@ export const PullRequestManager: React.FC = () => {
         }
     };
 
-    const onSelect = (event: any) => {
-        event.target.checked && setSelectedRepoOwner(event.target.value);
+    const onSelect = (event: any, repoOwner: any) => {
+        event.target.checked && setSelectedRepoOwner(repoOwner);
     }
 
     const getRepositoryOwners = async () => {
@@ -63,7 +63,7 @@ export const PullRequestManager: React.FC = () => {
                                     <input 
                                         type="radio" 
                                         className="radio"
-                                        onClick={onSelect}
+                                        onClick={(event: any) => onSelect(event, repoOwner)}
                                         checked={selectedRepoOwner.name === repoOwner.name}
                                     />
                                 </td>

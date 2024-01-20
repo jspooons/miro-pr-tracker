@@ -1,22 +1,26 @@
 import * as React from "react";
 
-const Checkbox = ({onSetChecked}: {
+const Checkbox = ({
+  isChecked,
+  onSetChecked,
+}: {
+  isChecked: boolean;
   onSetChecked: (value: boolean) => void;
 }) => {
-  const [checked, setChecked] = React.useState(false);
-
   const handleChange = () => {
-    setChecked(!checked);
-    onSetChecked(!checked);
+    onSetChecked(!isChecked);
   };
 
   return (
-    <input
+    <label className="checkbox">
+      <input
         type="checkbox"
         tabIndex={0}
-        checked={checked}
+        checked={isChecked}
         onChange={handleChange}
-    />
+      />
+      <span></span>
+    </label>
   );
 };
 

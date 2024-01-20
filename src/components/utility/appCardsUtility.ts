@@ -10,6 +10,7 @@ import { createFields } from '../../utils/appCardFieldsUtility';
 export const insertGithubAppCards = async (githubPullRequests: GithubPullRequest[], repoOwner: string, repoName: string) => {
     await Promise.all(
         githubPullRequests.map(async (pr, index) => {
+            console.log("HELLO",githubPullRequests);
             const miroBoardId = (await miro.board.getInfo()).id;
             const miroUserId = (await miro.board.getUserInfo()).id;
             
