@@ -77,31 +77,33 @@ export const AddPullRequestModal: React.FC<{ repoOwner: string, repoOwnerType: s
                         onChange={handleSelectChange}
                     />
                     {selectedGithubRepo && selectedGithubRepo.pullRequests.length > 0 ? 
-                        <table className="table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Pull Request</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    selectedGithubRepo.pullRequests.map((pullRequest: any) => (
-                                        <tr>
-                                            <td>
-                                                <Checkbox
-                                                    isChecked={checkedItems[pullRequest.title] || false}
-                                                    onSetChecked={(value) => handlePullRequestSelect(value, pullRequest)}
-                                                />
-                                            </td>
-                                            <td>
-                                                {pullRequest.title}
-                                            </td>
-                                        </tr>
-                                    ))
-                                }
-                            </tbody>
-                        </table>
+                        <div className="table-container">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Pull Request</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        selectedGithubRepo.pullRequests.map((pullRequest: any) => (
+                                            <tr>
+                                                <td>
+                                                    <Checkbox
+                                                        isChecked={checkedItems[pullRequest.title] || false}
+                                                        onSetChecked={(value) => handlePullRequestSelect(value, pullRequest)}
+                                                    />
+                                                </td>
+                                                <td>
+                                                    {pullRequest.title}
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                         : 
                         <h3>
                             This Repository has no Pull Requests    

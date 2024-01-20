@@ -19,8 +19,8 @@ export const PullRequestManager: React.FC = () => {
             const miroUserId = (await miro.board.getUserInfo()).id;
             await miro.board.ui.openModal({
                 url: `/addPullRequests?repoOwner=${selectedRepoOwner.name}&repoOwnerType=${selectedRepoOwner.repoOwnerType}&miroUserId=${miroUserId}`,
-                width: 600,
-                height: 400,
+                width: 900,
+                height: 600,
                 fullscreen: false,
             });
         }
