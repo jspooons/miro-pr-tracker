@@ -4,25 +4,16 @@ import axios from 'axios';
 import {NextApiRequest, NextApiResponse} from 'next';
 
 import db from '../../modules/db';
+import { validateStringParam } from '../../utils/utility';
 
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
-    
-    const { miroUserId, repoOwner, repoOwnerType }  = request.query;
 
     if (request.method === 'GET') {
         try {
-            if (!miroUserId || Array.isArray(miroUserId)) {
-                return response.status(400).json({ error: 'Invalid or missing miroUserId' });
-            }
-
-            if (!repoOwner || Array.isArray(repoOwner)) {
-                return response.status(400).json({ error: 'Invalid or missing repoOwner' });
-            }
-
-            if (!repoOwnerType || Array.isArray(repoOwnerType)) {
-                return response.status(400).json({ error: 'Invalid or missing repoOwnerType' });
-            }
+            const miroUserId = validateStringParam(request.query.miroUserId, 'miroUserId');
+            const repoOwner = validateStringParam(request.query.repoOwner, 'repoOwner');
+            const repoOwnerType = validateStringParam(request.query.repoOwnerType, 'repoOwnerType');
 
             const authResult = await db.auth.findUnique({
                 where: {
