@@ -1,7 +1,7 @@
 import React from 'react';
 
 import * as icons from '../../assets/icons';
-import { PrStatus, PrStatusIcons, getDaysSincePullRequestCreation } from '../../utils/appCardFieldsUtility';
+import { PrStatus, PrStatusIcons } from '../../utils/appCardFieldsUtility';
 
 
 export enum PrStatusCssClazz {
@@ -16,21 +16,15 @@ export enum PrStatusCssClazz {
 }
 
 
-export const Description = (descriptionData : any) => {
+export const Description = ({description, createdAt} : {description: string, createdAt: string}) => {
 
-    const timeSinceCreation = getDaysSincePullRequestCreation(new Date(descriptionData.descriptionData.createdAt));
-    const now = new Date();
-    let clazzName: string;
+    const texts = description.split(createdAt);
+    const daysSinceCreation = parseInt(createdAt.replace("d", ""));
 
-    const twoDaysAgo = new Date();
-    twoDaysAgo.setDate(now.getDate() - 2);
-
-    const fiveDaysAgo = new Date();
-    fiveDaysAgo.setDate(now.getDate() - 5);
-
-    if (descriptionData.descriptionData.createdAt > twoDaysAgo) {
+    let clazzName;
+    if (daysSinceCreation <= 2) {
         clazzName = "new";
-    } else if (descriptionData.descriptionData.createdAt > fiveDaysAgo) {
+    } else if (daysSinceCreation <= 5) {
         clazzName = "mid";
     } else {
         clazzName = "old";
@@ -40,9 +34,9 @@ export const Description = (descriptionData : any) => {
         <div>
             <h3 className="subheader">Description</h3>
             <p className="description">
-                Created by {descriptionData.descriptionData.author}
-                <span className={clazzName}><img className="icon" src={icons.SANDTIMER}/>{timeSinceCreation}</span>
-                 days ago. This is PR #{descriptionData.descriptionData.pullNumber}; for the repository {descriptionData.descriptionData.repoName}, owned by {descriptionData.descriptionData.repoOwner}.
+                {texts[0]}
+                <span className={clazzName}><img className="icon" src={icons.SANDTIMER}/>{createdAt}</span>
+                {texts[1]}
             </p>
         </div>
     );
@@ -56,7 +50,7 @@ export const Changes = ({ fileChanges, additions, deletions }: { fileChanges: st
                 <p className="description">
                     This Pull Request has had:
                     <ul>
-                        <li><span className="files-added"><img className="icon" src={icons.FILES_ADDED}/>{fileChanges} files change(s)</span></li>
+                        <li><span className="files-added"><img className="icon" src={icons.FILES_ADDED}/>{fileChanges} file change(s)</span></li>
                         <li><span className="addition"><img className="icon" src={icons.ADDITIONS}/>{additions} additions</span></li>
                         <li><span className="deletion"><img className="icon" src={icons.DELETIONS}/>{deletions} deletions</span></li>
                     </ul>

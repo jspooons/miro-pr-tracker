@@ -13,43 +13,26 @@ import { Changes, Description, Info, Reviewers, Status } from './editPullRequest
 //@ts-ignore
 export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { miroAppCardId, currentStatus } ) => {
 
-    const [isOutOfSync, setIsOutOfSync] = React.useState<boolean>(false);
-    const [descriptionData, setDescriptionData] = React.useState<any>();
+    const [canSync, setCanSync] = React.useState<boolean>(false);
+    const [description, setDescription] = React.useState<any>();
     const [fieldData, setFieldData] = React.useState<any>();
     const [title, setTitle] = React.useState<string>();
     const [reviewers, setReviewers] = React.useState<string[]>();
     const [isLoading, setIsLoading] = React.useState(true);
+    const [githubData, setGithubData] = React.useState<any>();
 
-    const compareFieldData = async (githubFlattenedFieldData: any) => {
-        const appCard = await miro.board.getById(miroAppCardId) as AppCard;
-        const miroFieldData = formatMiroFieldData(appCard);
+    const formatMiroFieldData = (appCard: any) => {
+        const miroFieldData = appCard.fields.map((field: any) => ({
+            value: field.value,
+            iconUrl: field.iconUrl,
+            fillColor: field.fillColor,
+            textColor: field.textColor
+        }));
 
-        setTitle(appCard.title);
-        setFieldData(miroFieldData);
-        setReviewers(miroFieldData.slice(6));
-
-        if (githubFlattenedFieldData.title !== miroFieldData.title) {
-            return true;
-        }
-
-        for (let i = 0; i < githubFlattenedFieldData.values.length; i++) {
-            if (githubFlattenedFieldData.values[i].value !== miroFieldData.values[i].value) {
-                return true;
-            }
-        }
-
-        return false;
+        return miroFieldData;
     }
 
     const flattenGithubFieldData = (githubFieldData: any) => {
-
-        setDescriptionData({
-            author:  githubFieldData.author,
-            createdAt: githubFieldData.createdAt,
-            pullNumber: githubFieldData.pullNumber,
-            repoName: githubFieldData.repoName,
-            repoOwner: githubFieldData.repoOwner
-        });
 
         return {
             title: githubFieldData.title,
@@ -63,44 +46,72 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
                 {value: `${githubFieldData.numComments}`},
                 {value: `${githubFieldData.customStatus}`},
                 ...(Array.isArray(githubFieldData.reviews) ? githubFieldData.reviews.map((review: any) => ({
-                    values: review.reviewer
+                    value: review.reviewer
                 })) : [])
             ]
         };
     }
 
-    const formatMiroFieldData = (appCard: any) => {
-        const miroFieldData = appCard.fields.map((field: any) => ({
-            value: field.value,
-            iconUrl: field.iconUrl,
-            fillColor: field.fillColor,
-            textColor: field.textColor
-        }));
+    const compareFieldData = async (githubFlattenedFieldData: any) => {
+        if (githubFlattenedFieldData.title !== title) {
+            return true;
+        }
 
-        return miroFieldData;
+        if (githubFlattenedFieldData.value.length !== fieldData.length) {
+            return true;
+        }
+
+        console.log(fieldData);
+
+        for (let i = 0; i < githubFlattenedFieldData.value.length; i++) {
+            if (githubFlattenedFieldData.value[i].value !== fieldData[i].value) {
+                return true;
+            }
+        }
+
+        return false;
     }
-    
-    const getAppCard = async () => {
-        const miroUserId = (await miro.board.getUserInfo()).id;
 
+    const handleCheckSync = async () => {
+        const miroUserId = await miro.board.getUserInfo().then((res: any) => res.id);
+        const githubFieldData = await axios.get(`/api/pullRequest/updated?miroAppCardId=${miroAppCardId}&miroUserId=${miroUserId}`);
+        const flattenedGithubFieldData = flattenGithubFieldData(githubFieldData.data);
+
+        const syncCheckResult = await compareFieldData(flattenedGithubFieldData)
+        setCanSync(syncCheckResult);
+
+        if (syncCheckResult) {
+            setGithubData(flattenGithubFieldData)
+        }
+
+        const message = syncCheckResult ? "There is a sync available, click the newly displayed 'Sync Pull Request' button" : "There is no available Sync, you are all up to date!";
+        miro.board.notifications.showInfo(`Ran Sync Check : ${message}`);
+    }
+
+    //const handleSync = async () => {}
+
+    const getAppCardData = async () => {
+        const miroUserId = await miro.board.getUserInfo().then((res: any) => res.id);
         if (miroUserId !== undefined && miroAppCardId !== undefined) {
-            const githubFieldData = await axios.get(`/api/pullRequest/updated?miroAppCardId=${miroAppCardId}&miroUserId=${miroUserId}`);
-            const flattenedGithubFieldData = flattenGithubFieldData(githubFieldData.data);
+            const appCard = await miro.board.getById(miroAppCardId) as AppCard;
+            const miroFieldData = formatMiroFieldData(appCard);
 
-            setIsOutOfSync(await compareFieldData(flattenedGithubFieldData));
+            setTitle(appCard.title);
+            setFieldData(miroFieldData);
+            setReviewers(miroFieldData.slice(6));
+            setDescription(appCard.description);
         }
     }
 
     React.useEffect(() => {
-        getAppCard();
+        getAppCardData();
       }, [miroAppCardId]);
 
     React.useEffect(() => {
-        if (fieldData && title && reviewers && descriptionData) {
+        if (fieldData && title && reviewers && description) {
             setIsLoading(false);
         }
-    }, [fieldData, title, reviewers, descriptionData]);
-
+    }, [fieldData, title, reviewers, description]);
 
     return (
         <div>
@@ -109,15 +120,21 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
                 : 
                 <div>
                     <h2>{title}</h2>
-                    <Description descriptionData={descriptionData}/>
+                    <Description description={description} createdAt={fieldData[0].value}/>
                     <div className="grid-container">
                         <Changes fileChanges={fieldData[1].value} additions={fieldData[2].value} deletions={fieldData[3].value}/>
                         <Info numComments={fieldData[4].value}/>
                         <Status status={fieldData[5].value}/>
                         <Reviewers reviewers={reviewers}/>
-                        <button type="button" className="button button-primary" disabled={!isOutOfSync}>
-                            Sync Pull Request
-                        </button>
+                        { !canSync ?
+                            <button type="button" className="button button-primary" onClick={handleCheckSync}>
+                                Check Sync Status
+                            </button>
+                            :
+                            <button type="button" style={{backgroundColor: "green"}} className="button button-primary">
+                                Sync Pull Request
+                            </button>
+                        }
                         <button type="button" className="button button-third">
                             Add Approver
                         </button>

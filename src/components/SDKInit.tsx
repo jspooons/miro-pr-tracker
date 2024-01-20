@@ -22,7 +22,8 @@ export const MiroSDKInit = () => {
       });
     });
 
-    miro.board.ui.on("app_card:open", (event) => {
+    miro.board.ui.on("app_card:open", async (event) => {
+      console.log("HELLO HELLO")
       const { appCard } = event;
       let currentStatus;
   
@@ -30,11 +31,20 @@ export const MiroSDKInit = () => {
         currentStatus = appCard.fields[0].value;
       };
 
-      miro.board.ui.openModal({
-        url: `http://localhost:3000/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
-        width: 520,
-        height: 570,
-      });
+      if (await miro.board.ui.canOpenModal()) {
+        miro.board.ui.openModal({
+          url: `http://localhost:3000/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
+          width: 520,
+          height: 570,
+        });
+      } else {
+        miro.board.ui.closeModal();
+        miro.board.ui.openModal({
+          url: `http://localhost:3000/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
+          width: 520,
+          height: 570,
+        });
+      }
     });
   });
 

@@ -2,7 +2,6 @@ import { useRouter } from 'next/router';
 
 import { AddPullRequestsModal } from "../components/Modal/AddPullRequestsModal";
 import Head from 'next/head';
-import Script from 'next/script';
 
 
 export default function Main() {

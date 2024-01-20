@@ -5,12 +5,11 @@ import axios from 'axios';
 import { AppCard } from "@mirohq/websdk-types";
 import { GithubPullRequest } from '../types';
 import { PullRequestMapping } from '@prisma/client';
-import { createFields } from '../../utils/appCardFieldsUtility';
+import { createFields, getDaysSincePullRequestCreation } from '../../utils/appCardFieldsUtility';
 
 export const insertGithubAppCards = async (githubPullRequests: GithubPullRequest[], repoOwner: string, repoName: string) => {
     await Promise.all(
         githubPullRequests.map(async (pr, index) => {
-            console.log("HELLO",githubPullRequests);
             const miroBoardId = (await miro.board.getInfo()).id;
             const miroUserId = (await miro.board.getUserInfo()).id;
             
@@ -29,7 +28,7 @@ export const insertGithubAppCards = async (githubPullRequests: GithubPullRequest
                 x: index * 350,
                 y: 0,
                 title: pr.title,
-                description: `Created by ${author} on ${createdAt}, as a part of pull request #${pr.pullNumber}; for ${repoName}, owned by ${repoOwner}.`,
+                description: `Created by ${author} ${getDaysSincePullRequestCreation(new Date(createdAt))}d days ago. This is PR #${pr.pullNumber}; for the repository ${repoName}, owned by ${repoOwner}.`,
                 style: {
                 cardTheme: "#000000",
                 },
