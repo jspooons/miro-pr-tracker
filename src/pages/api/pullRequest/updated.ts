@@ -1,5 +1,4 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-import db from '../../../modules/db';
 import { validateStringParam } from '../../../utils/utility';
 import { getFieldData } from '../../../utils/fieldDataUtility';
 import { getAuthResult } from '../../../utils/utility';
@@ -10,9 +9,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
         const miroUserId = validateStringParam(request.query.miroUserId, 'miroUserId');
 
         try {
-            const authResponse = await getAuthResult(db, miroUserId);
+            const authResponse = await getAuthResult(miroUserId);
 
-            const pullRequestMappingResponse = await db.pullRequestMapping.findUnique({
+            const pullRequestMappingResponse = await prisma.pullRequestMapping.findUnique({
                 where: {
                     miroAppCardId: miroAppCardId
                 }
@@ -22,7 +21,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
                 throw new Error("No pull request mapping found");
             }
 
-            const dashboardResponse = await db.dashboard.findUnique({
+            const dashboardResponse = await prisma.dashboard.findUnique({
                 where: {
                     id: pullRequestMappingResponse.dashboardId
                 }

@@ -1,7 +1,6 @@
 'use server'
 
 import {NextApiRequest, NextApiResponse} from 'next';
-import db from '../../modules/db';
 import { validateStringParam } from '../../utils/utility';
 
 
@@ -10,7 +9,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     if (request.method === 'POST') {
         const { miroBoardId, repoOwner, miroAppCardId, pullNumber, repoName } = request.body;
 
-        const dashboardResponse = await db.dashboard.findFirst({
+        const dashboardResponse = await prisma.dashboard.findFirst({
             where: {
                 miroBoardId,
                 repoOwner
@@ -18,7 +17,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         });
 
         if (dashboardResponse) {
-            await db.pullRequestMapping.create({
+            await prisma.pullRequestMapping.create({
                 data: {
                     dashboardId: dashboardResponse.id,
                     miroAppCardId: miroAppCardId,
@@ -35,7 +34,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     } else if (request.method === 'DELETE') {
         const { appCardIds } = request.body;
 
-        await db.pullRequestMapping.deleteMany({
+        await prisma.pullRequestMapping.deleteMany({
             where: {
                 miroAppCardId: {
                     in: appCardIds
@@ -49,7 +48,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         const miroBoardId = validateStringParam(request.query.miroBoardId, 'miroBoardId');
 
         try {
-            const pullRequestMappingsResponse = await db.pullRequestMapping.findMany({
+            const pullRequestMappingsResponse = await prisma.pullRequestMapping.findMany({
                 where: {
                     miroBoardId: miroBoardId
                 }

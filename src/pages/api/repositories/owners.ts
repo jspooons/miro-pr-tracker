@@ -1,7 +1,6 @@
 'use server'
 
 import {NextApiRequest, NextApiResponse} from 'next';
-import db from '../../../modules/db';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     const { miroBoardId }  = request.query;
@@ -12,7 +11,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
                 return response.status(400).json({ error: 'Invalid or missing miroBoardId' });
             }
 
-            const dashboardResponse = await db.dashboard.findMany({
+            const dashboardResponse = await prisma.dashboard.findMany({
                 where: {
                     miroBoardId: miroBoardId
                 }

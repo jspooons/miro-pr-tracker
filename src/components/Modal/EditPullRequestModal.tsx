@@ -7,9 +7,6 @@ import '../../assets/style.css'
 import { EditPullRequestModalProps } from '../types';
 import { AppCard } from '@mirohq/websdk-types';
 import { getDaysSincePullRequestCreation } from '../../utils/appCardFieldsUtility';
-import Script from 'next/script';
-import Head from 'next/head';
-
 
 
 //@ts-ignore
@@ -46,7 +43,6 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     }
 
     const flattenGithubFieldData = (githubFieldData: any) => {
-        console.log("GITHUB",githubFieldData.data);
         return {
             title: githubFieldData.title,
             author: githubFieldData.author,
@@ -99,13 +95,17 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     return (
         <div>
             <div>
-                <h3>Hello</h3>
+                <h2>{title}</h2>
+                <h3 className="">Description</h3>
+                <p className="description">{description}</p>
             </div>
             <div>
                 { isLoading ? 
                     <div className="central-spinner-container"><div className="spinner"></div></div> 
                     : 
-                    <div>hi</div>
+                    <div>
+
+                    </div>
                 }
             </div>
         </div>

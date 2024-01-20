@@ -1,7 +1,6 @@
 'use server'
 
 import {NextApiRequest, NextApiResponse} from 'next';
-import db from '../../modules/db';
 import axios from 'axios';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
@@ -18,7 +17,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
             const exists = await checkAuthExists(miroUserId);
 
             if (exists) {
-                await db.auth.update({
+                await prisma.auth.update({
                     where: {
                         miroUserId: miroUserId
                     },
@@ -28,7 +27,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
                     }
                 });
             } else {
-                await db.auth.create({
+                await prisma.auth.create({
                     data: {
                         miroUserId: miroUserId,
                         gitUserName: accountDetailsResult.data.login,
@@ -47,7 +46,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 }
 
 async function checkAuthExists(miroUserId: string) {
-    const auth = await db.auth.findUnique({
+    const auth = await prisma.auth.findUnique({
         where: {
             miroUserId: miroUserId
         }

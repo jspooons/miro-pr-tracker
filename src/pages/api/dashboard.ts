@@ -1,7 +1,6 @@
 'use server'
 
 import {NextApiRequest, NextApiResponse} from 'next';
-import db from '../../modules/db';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     const { miroBoardId, repoOwner, repoOwnerType } = request.body;
@@ -10,7 +9,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         const exists = await checkBoardIdOwnerPairExists(miroBoardId, repoOwner, repoOwnerType);
 
         if (exists) {
-            await db.dashboard.update({
+            await prisma.dashboard.update({
                 // @ts-ignore
                 where: {
                     miroBoardId: miroBoardId,
@@ -24,7 +23,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         }
 
 
-        await db.dashboard.create({
+        await prisma.dashboard.create({
             data: {
                 miroBoardId: miroBoardId,
                 repoOwner: repoOwner,
@@ -40,7 +39,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 }
 
 async function checkBoardIdOwnerPairExists(miroBoardId: string, repoOwner: string, repoOwnerType: string) {
-    const dashboard = await db.dashboard.findFirst({
+    const dashboard = await prisma.dashboard.findFirst({
         where: {
                 miroBoardId: miroBoardId,
                 repoOwner: repoOwner,

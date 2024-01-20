@@ -132,3 +132,18 @@ p {
 .modal-container {
   width: 100%;
 }
+
+/*
+
+  pr modal
+
+*/
+
+.subheader {
+  margin-left: 25px
+}
+
+.description {
+  background-color: lightgrey;
+  padding: 5px 5px 5px 5px;
+}

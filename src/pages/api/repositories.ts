@@ -3,7 +3,6 @@
 import axios from 'axios';
 import {NextApiRequest, NextApiResponse} from 'next';
 
-import db from '../../modules/db';
 import { validateStringParam } from '../../utils/utility';
 
 
@@ -15,7 +14,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
             const repoOwner = validateStringParam(request.query.repoOwner, 'repoOwner');
             const repoOwnerType = validateStringParam(request.query.repoOwnerType, 'repoOwnerType');
 
-            const authResult = await db.auth.findUnique({
+            const authResult = await prisma.auth.findUnique({
                 where: {
                     miroUserId: miroUserId
                 }
