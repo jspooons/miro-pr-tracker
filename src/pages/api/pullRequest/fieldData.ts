@@ -1,9 +1,6 @@
 import {NextApiRequest, NextApiResponse} from 'next';
-
 import db from '../../../modules/db';
 import { filterPullRequestReviews, getPullRequest, getPullRequestReviews, getPullRequestComments, getPullRequestCustomStatus } from '../../../utils/fieldDataUtility';
-import { validateStringParam, validateNumberParam } from '../../../utils/utility';
-
 
 async function getFieldData(repoOwner: string, repoName: string, pullNumber: number, gitToken: string) {
     const pullRequest = await getPullRequest(repoOwner, repoName, pullNumber, gitToken);
@@ -24,60 +21,37 @@ async function getFieldData(repoOwner: string, repoName: string, pullNumber: num
     };
 }
 
+async function getAuthResult(miroUserId: string) {
+    const authResult = await db.auth.findUnique({ where: { miroUserId } });
+    if (!authResult) {
+        throw new Error("No dashboard or auth entry found");
+    }
+    return authResult;
+}
+
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
-    if (request.method === 'GET') {
+    if (request.method === 'POST') {
+        const { pullNumber, repoName, repoOwner, miroUserId, task, miroAppCardId } = request.body;
 
-        const pullNumber = validateNumberParam(request.query.pullNumber, "pullNumber");
-        const repoName = validateStringParam(request.query.repoName, "repoName");
-        const miroAppCardId = validateStringParam(request.query.miroAppCardId, "miroAppCardId");
-        const miroUserId = validateStringParam(request.query.miroUserId, "miroUserId");
+        const authResult = await getAuthResult(miroUserId);
 
-        const pullRequestMapping = await db.pullRequestMapping.findUnique({ 
-            where: { 
-                miroAppCardId 
+        if (task === 'create') {
+            const fieldData = await getFieldData(repoOwner, repoName, pullNumber, authResult.gitToken);
+            response.status(200).json(fieldData);
+        } else if (task === 'update') {
+            const pullRequestMapping = await db.pullRequestMapping.findUnique({ where: { miroAppCardId } });
+            if (!pullRequestMapping) {
+                throw new Error("No pull request mapping found");
+            }
+
+            const dashboard = await db.dashboard.findUnique({ where: { id: pullRequestMapping.dashboardId } });
+            if (!dashboard) {
+                throw new Error("No dashboard found");
             } 
-        });
 
-        if (!pullRequestMapping) {
-            throw new Error("No pull request mapping found");
+            const fieldData = await getFieldData(dashboard.repoOwner, repoName, pullNumber, authResult.gitToken);
+            response.status(200).json(fieldData);
         }
-
-        const dashboard = await db.dashboard.findUnique({ 
-            where: { 
-                id: pullRequestMapping.dashboardId 
-            } 
-        });
-        
-        if (!dashboard) {
-            throw new Error("No dashboard found");
-        } 
-
-        const authResult = await db.auth.findUnique({ where: { miroUserId } });
-        
-        if (!authResult) {
-            throw new Error("No dashboard or auth entry found");
-        }
-
-        const fieldData = await getFieldData(dashboard.repoOwner, repoName, pullNumber, authResult.gitToken);
-
-        response.status(200).json(fieldData);
-
-    } else if (request.method === 'POST') {
-        const { pullNumber, repoName, repoOwner, miroUserId } = request.body;
-
-        const authResult = await db.auth.findUnique({ 
-            where: { 
-                miroUserId: miroUserId 
-            } 
-        });
-
-        if (!authResult) {
-            throw new Error("No dashboard or auth entry found");
-        }
-
-        const fieldData = await getFieldData(repoOwner, repoName, pullNumber, authResult.gitToken);
-
-        response.status(200).json(fieldData);
     } else {
         response.status(405).end();
     }

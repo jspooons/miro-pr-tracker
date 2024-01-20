@@ -14,6 +14,7 @@ export const insertGithubAppCards = async (githubPullRequests: GithubPullRequest
             const miroUserId = (await miro.board.getUserInfo()).id;
             
             const fieldDataResponse = await axios.post(`/api/pullRequest/fieldData`, {
+                task: 'create',
                 pullNumber: pr.pullNumber,
                 repoName: repoName,
                 repoOwner: repoOwner,
@@ -56,11 +57,17 @@ export const updateGithubAppCards = async (pullRequestMappings: PullRequestMappi
     await Promise.all(
         pullRequestMappings.map(async pullRequestMapping => {
     
-          const {pullNumber, repoName} = pullRequestMapping;
+          const { pullNumber, repoName } = pullRequestMapping;
           const appCard = await miro.board.getById(pullRequestMapping.miroAppCardId) as AppCard;
           const miroUserId = (await miro.board.getUserInfo()).id;
           
-          const fieldDataResponse = await axios.get(`/api/pullRequest/fieldData?pullNumber=${pullNumber}&repoName=${repoName}&miroAppCardId=${appCard.id}&miroUserId=${miroUserId}`);
+          const fieldDataResponse = await axios.post(`/api/pullRequest/fieldData`, {
+            task: 'update',
+            pullNumber: pullNumber,
+            repoName: repoName,
+            miroAppCardId: appCard.id,
+            miroUserId: miroUserId
+          });
     
           appCard.title = fieldDataResponse.data.title;
           appCard.fields = createFields(fieldDataResponse.data);      
