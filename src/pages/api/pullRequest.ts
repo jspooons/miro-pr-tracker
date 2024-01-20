@@ -2,6 +2,7 @@
 
 import {NextApiRequest, NextApiResponse} from 'next';
 import db from '../../modules/db';
+import { validateStringParam } from '../../utils/utility';
 
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
@@ -44,6 +45,22 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
         response.status(200).end();
     
+    } else if (request.method === 'GET') { 
+        const miroBoardId = validateStringParam(request.query.miroBoardId, 'miroBoardId');
+
+        try {
+            const pullRequestMappingsResponse = await db.pullRequestMapping.findMany({
+                where: {
+                    miroBoardId: miroBoardId
+                }
+            });
+    
+            response.status(200).send(pullRequestMappingsResponse);
+        } catch (error: any) {
+            console.error(error);
+            response.status(500).json( {error: error.message} )
+        }
+
     } else {
         response.status(405).end();
     }

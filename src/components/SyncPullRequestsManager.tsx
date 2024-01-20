@@ -13,7 +13,7 @@ export const SyncPullRequestsManager: React.FC = () => {
 
     const handleClick = async () => {
         const miroBoardId = (await miro.board.getInfo()).id;
-        const result = await axios.get(`/api/pullRequestMappings?miroBoardId=${miroBoardId}`);
+        const result = await axios.get(`/api/pullRequest?miroBoardId=${miroBoardId}`);
         await updateGithubAppCards(result.data);
     }
     
