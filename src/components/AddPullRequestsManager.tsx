@@ -6,12 +6,8 @@ import Image from 'next/image';
 import '../assets/style.css';
 import addPullRequests from '../assets/addPullRequests.png';
 import axios from 'axios';
+import { RepoOwner } from './types';
 
-
-interface RepoOwner {
-    name: string;
-    repoOwnerType: string;
-}
 
 export const PullRequestManager: React.FC = () => {
 

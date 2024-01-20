@@ -5,23 +5,9 @@ import * as React from 'react';
 import '../assets/style.css';
 import axios from 'axios';
 import Checkbox from './Checkbox';
+import { AddPullRequestModalProps, GithubPullRequest, GithubRepo } from './types';
+import { insertGithubAppCards } from './utility/appCardsUtility';
 
-
-interface AddPullRequestModalProps {
-    repoOwner: string;
-    repoOwnerType: string;
-    miroUserId: string;
-}
-
-interface GithubRepo {
-    name: string;
-    pullRequests: GithubPullRequest[];
-  }
-
-interface GithubPullRequest {
-    title: string;
-    pullNumber: number;
-}
 
 export const AddPullRequestModal: React.FC<AddPullRequestModalProps> = ( { repoOwner, repoOwnerType, miroUserId } ) => {
 
@@ -69,7 +55,7 @@ export const AddPullRequestModal: React.FC<AddPullRequestModalProps> = ( { repoO
 
     const handleImportClick = async () => {
         try {
-            await insertGitHubAppCards(selectedPullRequests, repoOwner, selectedGithubRepo.name);
+            await insertGithubAppCards(selectedPullRequests, repoOwner, selectedGithubRepo.name);
             await miro.board.ui.closeModal();
         } catch (error) {
             console.error(error);
@@ -139,7 +125,7 @@ export const AddPullRequestModal: React.FC<AddPullRequestModalProps> = ( { repoO
                 className="button button-primary button-fixed-bottom"
                 type="button"
                 disabled={selectedPullRequests.length === 0}
-                onClick={()=>{}}
+                onClick={handleImportClick}
             >
                 Add Pull Requests
             </button>
