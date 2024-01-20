@@ -8,7 +8,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     if (request.method === 'POST') {
         const { pullNumber, repoName, repoOwner, miroUserId, task, miroAppCardId } = request.body;
 
-        const authResult = await getAuthResult(miroUserId);
+        const authResult = await getAuthResult(db, miroUserId);
 
         if (task === 'create') {
             const fieldData = await getFieldData(repoOwner, repoName, pullNumber, authResult.gitToken);

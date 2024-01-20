@@ -92,7 +92,7 @@ export const createFields = (data: any) => {
         value: `${additions}`,
         iconUrl: ADDITIONS,
         iconShape: "square",
-        fillColor: "#085708",
+        fillColor: "#0fb509",
         textColor: "#a5e8b7",
       },
       {
@@ -181,7 +181,7 @@ const getPullRequestCreationDateStatus = (creationDateTime: Date, usePrimary: bo
     }
 }
 
-const getDaysSincePullRequestCreation = (creationDateTime: Date) => {
+export const getDaysSincePullRequestCreation = (creationDateTime: Date) => {
     const now = new Date();
 
     const diffInTime = now.getTime() - creationDateTime.getTime();
