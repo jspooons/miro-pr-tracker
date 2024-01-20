@@ -51,8 +51,6 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
             repoOwner: githubFieldData.repoOwner
         });
 
-        console.log("DD",reviewers);
-
         return {
             title: githubFieldData.title,
             author: githubFieldData.author,

@@ -18,8 +18,6 @@ export enum PrStatusCssClazz {
 
 export const Description = (descriptionData : any) => {
 
-    console.log("DDE", descriptionData);
-    
     const timeSinceCreation = getDaysSincePullRequestCreation(new Date(descriptionData.descriptionData.createdAt));
     const now = new Date();
     let clazzName: string;

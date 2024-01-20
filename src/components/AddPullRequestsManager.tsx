@@ -44,7 +44,7 @@ export const PullRequestManager: React.FC = () => {
     return (
         <div>
             <Image src={addPullRequests} alt="" />
-            <p className="paragraph">Your tracked repository owners can be found here. Select one and click the 'Select Pull Requests' button to select some Pull Requests to track.</p>
+            <p className="paragraph">The organisations and users that you are tracking can be found here. Select one repository owner and click the 'Select Pull Requests' button to select to open a pop-up where you will be able to select various pull requests to track under different repositories.</p>
             <div>
             { repoOwners ? 
                 <div className="table-container">
