@@ -20,12 +20,13 @@ export const PullRequestManager: React.FC = () => {
 
     const handleClick = async () => {
         if (await miro.board.ui.canOpenModal()) {
+            const miroUserId = (await miro.board.getUserInfo()).id;
             await miro.board.ui.openModal({
-                url: `/addPullRequests?repoOwner=${selectedRepoOwner.name}&repoOwnerType=${selectedRepoOwner.repoOwnerType}`,
+                url: `/addPullRequests?repoOwner=${selectedRepoOwner.name}&repoOwnerType=${selectedRepoOwner.repoOwnerType}&miroUserId=${miroUserId}`,
                 width: 600,
                 height: 400,
                 fullscreen: false,
-              });
+            });
         }
     };
 

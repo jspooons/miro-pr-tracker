@@ -76,7 +76,6 @@ p {
   transform: translate(-50%, -50%);
 }
 
-
 .spinner {
   border: 16px solid #f3f3f3; 
   border-top: 16px solid #3498db; 
@@ -92,4 +91,25 @@ p {
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
+}
+
+/*
+
+  buttons
+
+*/
+
+.button-fixed-bottom {
+  position: fixed;
+  bottom: 0;
+}
+
+/*
+
+  select
+
+*/
+
+.select {
+  margin-top: 10px;
 }
