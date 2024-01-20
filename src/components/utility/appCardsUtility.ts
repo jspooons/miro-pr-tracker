@@ -35,16 +35,15 @@ export const insertGithubAppCards = async (githubPullRequests: GithubPullRequest
                 status: "connected",
             });
             
-            axios.post(`/api/pullRequest/create`, {
-                body: {
+            // create pullRequestMapping
+            axios.post(`/api/pullRequest`, {
                     miroAppCardId: appCard.id,
                     pullNumber: pr.pullNumber,
                     repoName: repoName,
-                    miroUserId: appCard.createdBy,
                     repoOwner: repoOwner,
                     miroBoardId: miroBoardId,
                 }
-            });
+            );
             
             if (index === 0) {
                 await miro.board.viewport.zoomTo(appCard);
