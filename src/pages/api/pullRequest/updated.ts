@@ -6,8 +6,8 @@ import { getAuthResult } from '../../../utils/utility';
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     if (request.method === 'GET') {
-        const miroAppCardId = validateStringParam(request.query.miroBoardId, 'miroAppCardId');
-        const miroUserId = validateStringParam(request.query.miroBoardId, 'miroUserId');
+        const miroAppCardId = validateStringParam(request.query.miroAppCardId, 'miroAppCardId');
+        const miroUserId = validateStringParam(request.query.miroUserId, 'miroUserId');
 
         try {
             const authResponse = await getAuthResult(db, miroUserId);
@@ -32,8 +32,8 @@ export default async function handler(request: NextApiRequest, response: NextApi
                 throw new Error("No dashboard found");
             }
             
-            const fieldData = getFieldData(dashboardResponse.repoOwner, pullRequestMappingResponse.repoName, pullRequestMappingResponse.pullNumber, authResponse.gitToken);
-    
+            const fieldData = await getFieldData(dashboardResponse.repoOwner, pullRequestMappingResponse.repoName, pullRequestMappingResponse.pullNumber, authResponse.gitToken);
+
             response.status(200).send(fieldData);
         } catch (error: any) {
             console.error(error);

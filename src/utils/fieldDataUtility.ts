@@ -106,6 +106,8 @@ export async function getFieldData(repoOwner: string, repoName: string, pullNumb
 
     return {
         title: pullRequest.title,
+        repoOwner: repoOwner,
+        repoName: repoName,
         author: pullRequest.user.login,
         pullNumber: pullNumber,
         numFilesChanged: pullRequest.changed_files,

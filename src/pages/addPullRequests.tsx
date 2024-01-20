@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 
 import { AddPullRequestsModal } from "../components/Modal/AddPullRequestsModal";
 import Head from 'next/head';
+import Script from 'next/script';
 
 
 export default function Main() {
@@ -25,13 +26,13 @@ export default function Main() {
   }
   
   return (
-    <div>
+    <>
       <Head>
-        <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
+        <Script src="https://miro.com/app/static/sdk/v2/miro.js"></Script>
       </Head>
       <div>
           <AddPullRequestsModal repoOwner={repoOwner} repoOwnerType={repoOwnerType} miroUserId={miroUserId}/>
       </div>
-    </div>
+    </>
   );
 };

@@ -11,7 +11,7 @@ export interface AddPullRequestModalProps {
 
 export interface EditPullRequestModalProps {
     miroAppCardId: string;
-    currentStatus: string;
+    currentStatus?: string;
 }
 
 interface GithubRepo {

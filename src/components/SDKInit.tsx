@@ -1,7 +1,10 @@
 'use client';
 
+import dotenv from 'dotenv';
 import axios from 'axios';
 import {useEffect} from 'react';
+
+dotenv.config({ path: '.env' });
 
 export const MiroSDKInit = () => {
   useEffect(() => {
@@ -25,14 +28,10 @@ export const MiroSDKInit = () => {
   
       if (appCard.fields) {
         currentStatus = appCard.fields[0].value;
-      }
-  
-      // Fetch a specific app card by specifying its ID
-      const url = `/editPullRequest?miroAppCardId=${appCard.id}?currentStatus=${currentStatus}`;
-  
-      // Open the modal to display the content of the fetched app card
+      };
+
       miro.board.ui.openModal({
-        url,
+        url: `http://localhost:3000/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
         width: 520,
         height: 570,
       });
