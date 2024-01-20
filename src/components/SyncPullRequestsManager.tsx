@@ -16,7 +16,7 @@ export const SyncPullRequestsManager: React.FC = () => {
         const result = await axios.get(`/api/pullRequestMappings?miroBoardId=${miroBoardId}`);
         await updateGithubAppCards(result.data);
     }
-
+    
     return (
         <div>
             <Image src={syncPrs} alt="" />

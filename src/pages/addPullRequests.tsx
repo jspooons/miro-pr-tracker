@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 
-import { AddPullRequestModal } from "../components/AddPullRequestModal";
+import { AddPullRequestModal } from "../components/addPullRequest/AddPullRequestModal";
 import Head from 'next/head';
 
 

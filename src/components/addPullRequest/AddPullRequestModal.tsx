@@ -2,11 +2,11 @@
 
 import * as React from 'react';
 
-import '../assets/style.css';
+import '../../assets/style.css'
 import axios from 'axios';
-import Checkbox from './Checkbox';
-import { AddPullRequestModalProps, GithubPullRequest, GithubRepo } from './types';
-import { insertGithubAppCards } from './utility/appCardsUtility';
+import Checkbox from '../utility/Checkbox';
+import { AddPullRequestModalProps, GithubPullRequest, GithubRepo } from '../types';
+import { insertGithubAppCards } from '../utility/appCardsUtility';
 
 
 export const AddPullRequestModal: React.FC<AddPullRequestModalProps> = ( { repoOwner, repoOwnerType, miroUserId } ) => {
@@ -40,6 +40,7 @@ export const AddPullRequestModal: React.FC<AddPullRequestModalProps> = ( { repoO
 
     const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedGithubRepo(JSON.parse(event.target.value));
+        setSelectedPullRequests(JSON.parse(event.target.value).pullRequests);
     };
 
     const onCheck = (isChecked: boolean, pr: GithubPullRequest) => {

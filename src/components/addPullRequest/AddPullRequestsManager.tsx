@@ -3,10 +3,10 @@
 import * as React from 'react';
 import Image from 'next/image';
 
-import '../assets/style.css';
-import addPullRequests from '../assets/addPullRequests.png';
+import '../../assets/style.css';
+import addPullRequests from '../../assets/addPullRequests.png';
 import axios from 'axios';
-import { RepoOwner } from './types';
+import { RepoOwner } from '../types';
 
 
 export const PullRequestManager: React.FC = () => {
