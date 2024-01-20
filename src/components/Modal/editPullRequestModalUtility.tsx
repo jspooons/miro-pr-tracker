@@ -139,3 +139,16 @@ const getCssStyleOrIcon = (status: string, content: string) => {
             return ColorIconPicker.NO_REVIEW;
     }
 }
+
+export const getFieldValueDecisionFromIconUrl = (iconUrl: string) => {
+    switch (iconUrl) {
+        case PrStatusIcons.APPROVED:
+            return PrStatus.APPROVED;
+        case PrStatusIcons.CHANGES_REQUESTED:
+            return PrStatus.CHANGES_REQUESTED;
+        case PrStatusIcons.COMMENTED:
+            return PrStatus.COMMENTED;
+        default:
+            return PrStatus.NO_REVIEW;
+    }
+}

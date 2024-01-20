@@ -8,7 +8,7 @@ import { EditPullRequestModalProps } from '../types';
 import { AppCard } from '@mirohq/websdk-types';
 import { getDaysSincePullRequestCreation } from '../../utils/appCardFieldsUtility';
 
-import { Changes, Description, Info, Reviewers, Status } from './editPullRequestModalUtility';
+import { Changes, Description, Info, Reviewers, Status, getFieldValueDecisionFromIconUrl } from './editPullRequestModalUtility';
 
 //@ts-ignore
 export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { miroAppCardId, currentStatus } ) => {
@@ -33,20 +33,21 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     }
 
     const flattenGithubFieldData = (githubFieldData: any) => {
-
         return {
             title: githubFieldData.title,
             author: githubFieldData.author,
-            value: [
+            values: [
                 // this is in a specific order, matching the order of the fields created initially, see appCardFieldsUtility.ts
                 {value: `${getDaysSincePullRequestCreation(new Date(githubFieldData.createdAt))}d`},
                 {value: `${githubFieldData.numFilesChanged}`},
                 {value: `${githubFieldData.additions}`},
                 {value: `${githubFieldData.deletions}`},
                 {value: `${githubFieldData.numComments}`},
-                {value: `${githubFieldData.customStatus}`},
+                {value: `${githubFieldData.customStatus}`}
+            ],
+            reviews: [
                 ...(Array.isArray(githubFieldData.reviews) ? githubFieldData.reviews.map((review: any) => ({
-                    value: review.reviewer
+                    value: review.reviewer, decision: review.decision
                 })) : [])
             ]
         };
@@ -57,14 +58,21 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
             return true;
         }
 
-        if (githubFlattenedFieldData.value.length !== fieldData.length) {
+        const totalNumGithubFields = githubFlattenedFieldData.values.length + githubFlattenedFieldData.reviews.length;
+
+        if (totalNumGithubFields !== fieldData.length) {
             return true;
         }
 
-        console.log(fieldData);
+        for (let i = 0; i < githubFlattenedFieldData.values.length; i++) {
+            if (githubFlattenedFieldData.values[i].value !== fieldData[i].value) {
+                return true;
+            }
+        }
 
-        for (let i = 0; i < githubFlattenedFieldData.value.length; i++) {
-            if (githubFlattenedFieldData.value[i].value !== fieldData[i].value) {
+        for (let i = githubFlattenedFieldData.values.length; i < totalNumGithubFields; i++) {
+            if (githubFlattenedFieldData.reviews[i-githubFlattenedFieldData.values.length].value !== fieldData[i].value &&
+                githubFlattenedFieldData.reviews[i-githubFlattenedFieldData.values.length].decision !== getFieldValueDecisionFromIconUrl(fieldData[i].iconUrl)) {
                 return true;
             }
         }
@@ -76,7 +84,6 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
         const miroUserId = await miro.board.getUserInfo().then((res: any) => res.id);
         const githubFieldData = await axios.get(`/api/pullRequest/updated?miroAppCardId=${miroAppCardId}&miroUserId=${miroUserId}`);
         const flattenedGithubFieldData = flattenGithubFieldData(githubFieldData.data);
-
         const syncCheckResult = await compareFieldData(flattenedGithubFieldData)
         setCanSync(syncCheckResult);
 
