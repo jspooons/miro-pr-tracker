@@ -34,6 +34,16 @@ export async function up(knex: Knex): Promise<void> {
       
         table.foreign('dashboardId').references('id').inTable('Dashboard');
     });
+
+    await knex.schema.createTable('ReviewReservation', function (table) {
+        table.increments('id').primary();
+        table.integer('pullRequestMappingId').notNullable();
+        table.string('miroUserId').notNullable();
+        table.timestamp('createdAt').defaultTo(knex.fn.now());
+        table.timestamp('UpdatedAt').defaultTo(knex.fn.now());
+
+        table.foreign('pullRequestMappingId').references('id').inTable('PullRequestMapping');
+    })
 }
 
 

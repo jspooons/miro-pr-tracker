@@ -40,5 +40,16 @@ model PullRequestMapping {
   repoName          String
   createdAt         DateTime  @default(now())
   UpdatedAt         DateTime  @updatedAt
+  
   dashboard         Dashboard @relation(fields: [dashboardId], references: [id])
+  reviewReservations ReviewReservation[]
+}
+
+model ReviewReservation {
+  id                    Int       @id @default(autoincrement())
+  pullRequestMappingId  Int
+  miroUserId            String
+  createdAt             DateTime  @default(now())
+  UpdatedAt             DateTime  @updatedAt
+  pullRequestMapping PullRequestMapping @relation(fields: [pullRequestMappingId], references: [id])
 }
