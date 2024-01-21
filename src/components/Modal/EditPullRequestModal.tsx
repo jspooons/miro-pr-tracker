@@ -144,8 +144,6 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
         const miroReviewers = await axios.get(`/api/reservation?miroAppCardId=${miroAppCardId}`);
         const miroReviewersData = miroReviewers.data;
 
-        console.log("MMMDATA",miroReviewersData)
-
         setIsMiroReviewer(miroReviewersData.some((reviewer: any) => reviewer.miroUserId === miroUserId));
         setMiroReviewers(miroReviewersData.map((reviewer: any) => ({ name: reviewer.miroUsername, id: reviewer.miroUserId })));
     }
@@ -168,8 +166,8 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
                 : 
                 <div>
                     <h2>{title}</h2>
-                    <Description description={description} createdAt={fieldData[0].value}/>
-                    <div className="">
+                    <div className="parent">
+                        <Description description={description} createdAt={fieldData[0].value}/>
                         <Changes fileChanges={fieldData[1].value} additions={fieldData[2].value} deletions={fieldData[3].value}/>
                         <Info numComments={fieldData[4].value}/>
                         <Status status={fieldData[5].value}/>

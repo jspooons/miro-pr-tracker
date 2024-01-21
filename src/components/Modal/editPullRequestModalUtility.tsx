@@ -31,7 +31,7 @@ export const Description = ({description, createdAt} : {description: string, cre
     }
     
     return (
-        <div>
+        <div className="div1">
             <h3 className="subheader">Description</h3>
             <p className="description">
                 {texts[0]}
@@ -44,7 +44,7 @@ export const Description = ({description, createdAt} : {description: string, cre
 
 export const Changes = ({ fileChanges, additions, deletions }: { fileChanges: string, additions: string, deletions: string }) => {
     return (
-        <div>
+        <div className="div2">
             <h3 className="subheader">Changes</h3>
             <div>
                 <p className="description">
@@ -62,12 +62,12 @@ export const Changes = ({ fileChanges, additions, deletions }: { fileChanges: st
 
 export const Info = ({numComments} : {numComments: string}) => {
     return (
-        <div>
-        <h3 className="subheader">Information</h3>
-        <p className="description">
-            This Pull Request has 
-            <span className="comments"><img className="icon" src={icons.COMMENTS}/>{numComments} comments</span>
-        </p>
+        <div className="div3">
+            <h3 className="subheader">Information</h3>
+            <p className="description">
+                This Pull Request has 
+                <span className="comments"><img className="icon" src={icons.COMMENTS}/>{numComments} comments</span>
+            </p>
     </div>
     );
 }
@@ -78,7 +78,7 @@ export const Status = ({status}: {status: string}) => {
     const icon = getCssStyleOrIcon(status, "icons");
 
     return (
-        <div>
+        <div className="div4">
             <h3 className="subheader">Status</h3>
             <p className="description">
                 The status of the pull request as seen on Github is 
@@ -91,7 +91,7 @@ export const Status = ({status}: {status: string}) => {
 export const Reviewers = ({reviewers}: {reviewers: any}) => {
     return (
 
-        <div>
+        <div className="div5">
             <h3 className="subheader">Reviewers</h3>
             <p className="description">
                 <ul>
@@ -107,11 +107,8 @@ export const Reviewers = ({reviewers}: {reviewers: any}) => {
 }
 
 export const MiroReviewers = ({miroReviewers}: {miroReviewers: any}) => {
-
-    console.log("Miro Reviewers", miroReviewers);
-
     return (
-        <div>
+        <div className="div6">
             <h3 className="subheader">Reserved Reviewers</h3>
             <p className="description">
                 <ul>
