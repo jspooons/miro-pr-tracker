@@ -106,6 +106,26 @@ export const Reviewers = ({reviewers}: {reviewers: any}) => {
     );
 }
 
+export const MiroReviewers = ({miroReviewers}: {miroReviewers: any}) => {
+
+    
+
+    return (
+        <div>
+            <h3 className="subheader">Reserved Reviewers</h3>
+            <p className="description">
+                <ul>
+                    {miroReviewers.map((reviewer: any) => (
+                        <li>
+                            <span className="default-option" style={{color: "darkblue", backgroundColor: "cyan"}}>Miro:{reviewer.name}</span>
+                        </li>
+                    ))}
+                </ul>
+            </p>
+        </div>
+    );
+}
+
 const getCssStyleOrIcon = (status: string, content: string) => {
     let ColorIconPicker;
     switch (content) {

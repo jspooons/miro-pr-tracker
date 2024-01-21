@@ -12,7 +12,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
         try {
             const accountDetailsResult = await axios.get(`https://api.github.com/user`, {
                 headers: {
-                    Authorization: `token ${gitToken}`
+                    'Authorization': `token ${gitToken}`
                 }
             });
 
