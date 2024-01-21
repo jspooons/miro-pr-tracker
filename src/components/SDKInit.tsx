@@ -35,7 +35,7 @@ export const MiroSDKInit = () => {
         height: 620,
       });
     });
-  });
+  }, []);
 
   return null;
 };
