@@ -7,8 +7,9 @@ import prisma from '../../modules/db'
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     const { miroUserId, gitToken } = request.body;
-    
+    console.log("in auth.ts", miroUserId, gitToken);
     if (request.method === 'POST') {
+        console.log("miroUserId: ", miroUserId);
         try {
             const accountDetailsResult = await axios.get(`https://api.github.com/user`, {
                 headers: {
@@ -43,6 +44,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
 
         response.status(200).end();
     } else {
+        console.log("in 405 else");
         response.status(405).end(); 
     }
 }
