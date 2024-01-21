@@ -31,13 +31,8 @@ export default function RootLayout() {
   }
 
   return (
-    <html>
-      <body>
-        <Script
-          src="https://miro.com/app/static/sdk/v2/miro.js"
-          strategy="beforeInteractive"
-        />
-        <MiroSDKInit />
+    <div>
+      <MiroSDKInit />
         <div id="root">
           <div className="=cs1 ce12">
             <div className="tabs">
@@ -68,7 +63,6 @@ export default function RootLayout() {
             {renderTab()}
           </div>
         </div>
-      </body>
-    </html>
+      </div>
   );
 }
