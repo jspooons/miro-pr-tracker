@@ -18,10 +18,15 @@ export const GitManager: React.FC = () => {
         event.preventDefault();
         const miroUserId = (await miro.board.getUserInfo()).id;
         
-        await axios.post(`/api/auth`, {
-            miroUserId,
-            gitToken
-        });
+        console.log("HELLO");
+        try {
+            await axios.post(`/api/auth`, {
+                miroUserId,
+                gitToken
+            });
+        } catch (error) {
+            console.log(error);
+        }
 
         setGitToken("");
     };
@@ -31,7 +36,7 @@ export const GitManager: React.FC = () => {
     
         const miroBoardId = (await miro.board.getInfo()).id;
         const repoOwnerType = isRepoOwnerUser && !isRepoOwnerOrg ? "user" : "org";
-        
+
         await axios.post(`/api/dashboard`, {
           repoOwner,
           repoOwnerType,

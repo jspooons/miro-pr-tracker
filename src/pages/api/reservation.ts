@@ -118,7 +118,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
                         miroUserId: miroUserId
                     }
                 }
-            }).then(async reviewLink => {
+            }).then(async (reviewLink: any) => {
                 if (reviewLink) {
                     await axios.delete(
                         `https://api.github.com/repos/${repoOwner}/${repoName}/pulls/${pullNumber}/reviews/${reviewLink.reviewId}`,
@@ -141,7 +141,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
                         }
                     }
                 });
-            }).catch(error => {
+            }).catch((error:any) => {
                 console.error(error);
             });
 

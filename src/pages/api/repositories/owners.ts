@@ -19,7 +19,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
                 }
             });
 
-            const repoOwners = dashboardResponse.map((dashboard) => ({name: dashboard.repoOwner, repoOwnerType: dashboard.repoOwnerType}));
+            const repoOwners = dashboardResponse.map((dashboard: any) => ({name: dashboard.repoOwner, repoOwnerType: dashboard.repoOwnerType}));
 
             response.status(200).send(repoOwners);
         } catch (error) {

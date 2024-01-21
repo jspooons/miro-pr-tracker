@@ -1,32 +1,33 @@
-import { useRouter } from 'next/router';
-
+import { Head } from "next/document";
 import { AddPullRequestsModal } from "../components/Modal/AddPullRequestsModal";
 
 
-export default function Main() {
+export async function getServerSideProps(context: any) {
+  const { repoOwner, repoOwnerType, miroUserId } = context.query;
 
-  const router = useRouter();
+  // Validate the query parameters here ...
 
-  const repoOwner = router.query.repoOwner;
-  const repoOwnerType = router.query.repoOwnerType;
-  const miroUserId = router.query.miroUserId;
+  return {
+    props: {
+      repoOwner,
+      repoOwnerType,
+      miroUserId,
+    },
+  };
+}
 
-  if (!repoOwner || Array.isArray(repoOwner)) {
-    return <div>Invalid or missing repoOwner</div>;
-  } 
+// @ts-ignore
+export default function Main({ repoOwner, repoOwnerType, miroUserId }) {
 
-  if (!repoOwnerType || Array.isArray(repoOwnerType)) {
-    return <div>Invalid or missing repoOwnerType</div>;
-  } 
-
-  if (!miroUserId || Array.isArray(miroUserId)) {
-    return <div>Invalid or missing miroUserId</div>;
-  }
-  
   return (
     <>
-      <div>
+      <div className="container">
+        <Head>
+          <title>Miro camera upload</title>
+        </Head>
+        <div>
           <AddPullRequestsModal repoOwner={repoOwner} repoOwnerType={repoOwnerType} miroUserId={miroUserId}/>
+        </div>
       </div>
     </>
   );

@@ -33,9 +33,6 @@
   },
   "include": [
     "src",
-    "app",
-    "pages",
-    "modules",
     "*.ts",
     ".next/types/**/*.ts"
   ],
