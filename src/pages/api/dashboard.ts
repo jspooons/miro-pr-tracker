@@ -1,5 +1,3 @@
-'use server'
-
 import {NextApiRequest, NextApiResponse} from 'next';
 
 import prisma from '../../modules/db'
