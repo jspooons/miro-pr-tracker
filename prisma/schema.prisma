@@ -54,3 +54,14 @@ model ReviewReservation {
 
   @@unique([miroAppCardId, miroUserId])
 }
+
+model ReviewLink {
+  id            Int       @id @default(autoincrement())
+  reviewId      Int
+  miroUserId    String
+  miroAppCardId String
+  createdAt     DateTime  @default(now())
+  UpdatedAt     DateTime  @updatedAt
+
+  @@unique([miroAppCardId, miroUserId])
+}

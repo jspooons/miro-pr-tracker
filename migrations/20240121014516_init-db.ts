@@ -44,7 +44,18 @@ export async function up(knex: Knex): Promise<void> {
         table.timestamp('UpdatedAt').defaultTo(knex.fn.now());
 
         table.unique(['miroAppCardId', 'miroUserId']);
-    })
+    });
+
+    await knex.schema.createTable('ReviewLink', function (table) {
+        table.increments('id').primary();
+        table.integer('reviewId').notNullable();
+        table.string('miroAppCardId').notNullable();
+        table.string('miroUserId').notNullable();
+        table.timestamp('createdAt').defaultTo(knex.fn.now());
+        table.timestamp('UpdatedAt').defaultTo(knex.fn.now());
+
+        table.unique(['miroAppCardId', 'miroUserId']);
+    });
 }
 
 

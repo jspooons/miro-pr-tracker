@@ -130,7 +130,8 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
         const miroUserId = await miro.board.getUserInfo().then((res: any) => res.id);
 
         if (isMiroReviewer) {
-            await axios.delete(`/api/reservation?miroUserId=${miroUserId}&miroAppCardId=${miroAppCardId}&miroUsername=${miroUsername}`);
+            console.log("HELLO", miroUserId, miroAppCardId);
+            await axios.delete(`/api/reservation?miroUserId=${miroUserId}&miroAppCardId=${miroAppCardId}`);
             setIsMiroReviewer(false);
             setMiroReviewers(miroReviewers.filter((reviewer: MiroReviewer) => reviewer.id !== miroUserId));
         } else {
