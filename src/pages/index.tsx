@@ -5,7 +5,9 @@ export default function () {
 
   return (
     <div>
-      <RootLayout />
+      <div>
+        <RootLayout />
+      </div>
     </div>
   );
 }
