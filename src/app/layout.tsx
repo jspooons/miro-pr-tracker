@@ -2,7 +2,6 @@
 
 import '../assets/style.css';
 import React from 'react';
-import Script from 'next/script';
 
 import {MiroSDKInit} from '../components/SDKInit';
 import { GitManager } from '../components/GithubManager';
