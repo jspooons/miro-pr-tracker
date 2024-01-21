@@ -2,11 +2,12 @@
   "name": "miro-github-pull-request-tracker",
   "version": "0.1.0",
   "license": "MIT",
+  "builds": [{ "src": "next.config.js", "use": "@now/next" }],
   "scripts": {
     "build": "next build",
     "start": "next dev",
     "lint": "next lint",
-    "build:start": "npx prisma generate && npm run build && npm run start",
+    "build:start": "npx prisma generate && next build && next start",
     "db:migrate": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' knex migrate:latest",
     "db:migrate:undo": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' knex migrate:down",
     "db:migrate:make": "TS_NODE_COMPILER_OPTIONS='{ \"module\": \"commonjs\" }' knex migrate:make"
