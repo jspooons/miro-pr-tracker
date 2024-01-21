@@ -29,20 +29,11 @@ export const MiroSDKInit = () => {
         currentStatus = appCard.fields[0].value;
       };
 
-      if (await miro.board.ui.canOpenModal()) {
-        miro.board.ui.openModal({
-          url: `/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
-          width: 520,
-          height: 620,
-        });
-      } else {
-        miro.board.ui.closeModal();
-        miro.board.ui.openModal({
-          url: `/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
-          width: 520,
-          height: 620,
-        });
-      }
+      miro.board.ui.openModal({
+        url: `/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
+        width: 520,
+        height: 620,
+      });
     });
   });
 
