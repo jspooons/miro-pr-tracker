@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import { AppCard } from "@mirohq/websdk-types";
 import { GithubPullRequest } from '../types';
-import { PullRequestMapping } from '@prisma/client';
 import { createFields, getDaysSincePullRequestCreation } from '../../utils/appCardFieldsUtility';
 
 export const insertGithubAppCards = async (githubPullRequests: GithubPullRequest[], repoOwner: string, repoName: string) => {
@@ -53,8 +52,9 @@ export const insertGithubAppCards = async (githubPullRequests: GithubPullRequest
     );
 }
 
-export const updateGithubAppCards = async (pullRequestMappings: PullRequestMapping[]) => {
+export const updateGithubAppCards = async (pullRequestMappings: any) => {
     await Promise.all(
+        //@ts-ignore
         pullRequestMappings.map(async pullRequestMapping => {
     
           const { pullNumber, repoName } = pullRequestMapping;
