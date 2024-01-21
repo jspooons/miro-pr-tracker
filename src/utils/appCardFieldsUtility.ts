@@ -73,6 +73,7 @@ const StatusEnums = {
 
 export const createFields = (data: any) => {
     const { numFilesChanged, numComments, additions, deletions, reviews, customStatus, createdAt } = data;
+    console.log("DATA", data);
     return [
       {
         value: `${getDaysSincePullRequestCreation(new Date(createdAt))}d`,

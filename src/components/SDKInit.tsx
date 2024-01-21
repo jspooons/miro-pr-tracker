@@ -14,7 +14,6 @@ export const MiroSDKInit = () => {
 
     miro.board.ui.on("items:delete", (event) => {
       const appCardIds = event.items.filter((item) => item.type ==="app_card").map((appCard) => appCard.id);
-      
       axios.delete(`/api/pullRequest`, {
         data: {
           miroAppCardIds: appCardIds
@@ -23,7 +22,6 @@ export const MiroSDKInit = () => {
     });
 
     miro.board.ui.on("app_card:open", async (event) => {
-      console.log("HELLO HELLO")
       const { appCard } = event;
       let currentStatus;
   
@@ -35,14 +33,14 @@ export const MiroSDKInit = () => {
         miro.board.ui.openModal({
           url: `http://localhost:3000/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
           width: 520,
-          height: 570,
+          height: 620,
         });
       } else {
         miro.board.ui.closeModal();
         miro.board.ui.openModal({
           url: `http://localhost:3000/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
           width: 520,
-          height: 570,
+          height: 620,
         });
       }
     });

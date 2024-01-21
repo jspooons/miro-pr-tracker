@@ -9,6 +9,8 @@ import { AppCard } from '@mirohq/websdk-types';
 import { getDaysSincePullRequestCreation } from '../../utils/appCardFieldsUtility';
 
 import { Changes, Description, Info, Reviewers, Status, getFieldValueDecisionFromIconUrl } from './editPullRequestModalUtility';
+import { updateGithubAppCard } from '../utility/appCardsUtility';
+
 
 //@ts-ignore
 export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { miroAppCardId, currentStatus } ) => {
@@ -33,6 +35,7 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     }
 
     const flattenGithubFieldData = (githubFieldData: any) => {
+        console.log("GOLL",githubFieldData);
         return {
             title: githubFieldData.title,
             author: githubFieldData.author,
@@ -47,7 +50,7 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
             ],
             reviews: [
                 ...(Array.isArray(githubFieldData.reviews) ? githubFieldData.reviews.map((review: any) => ({
-                    value: review.reviewer, decision: review.decision
+                    reviewer: review.reviewer, decision: review.decision
                 })) : [])
             ]
         };
@@ -71,7 +74,7 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
         }
 
         for (let i = githubFlattenedFieldData.values.length; i < totalNumGithubFields; i++) {
-            if (githubFlattenedFieldData.reviews[i-githubFlattenedFieldData.values.length].value !== fieldData[i].value &&
+            if (githubFlattenedFieldData.reviews[i-githubFlattenedFieldData.values.length].reviewer !== fieldData[i].value &&
                 githubFlattenedFieldData.reviews[i-githubFlattenedFieldData.values.length].decision !== getFieldValueDecisionFromIconUrl(fieldData[i].iconUrl)) {
                 return true;
             }
@@ -84,18 +87,22 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
         const miroUserId = await miro.board.getUserInfo().then((res: any) => res.id);
         const githubFieldData = await axios.get(`/api/pullRequest/updated?miroAppCardId=${miroAppCardId}&miroUserId=${miroUserId}`);
         const flattenedGithubFieldData = flattenGithubFieldData(githubFieldData.data);
+        
         const syncCheckResult = await compareFieldData(flattenedGithubFieldData)
         setCanSync(syncCheckResult);
 
         if (syncCheckResult) {
-            setGithubData(flattenGithubFieldData)
+            setGithubData(flattenedGithubFieldData)
         }
 
-        const message = syncCheckResult ? "There is a sync available, click the newly displayed 'Sync Pull Request' button" : "There is no available Sync, you are all up to date!";
+        const message = syncCheckResult ? "Sync available, click 'Sync Pull Request' button to sync." : "There is no available sync, you are all up to date!";
         miro.board.notifications.showInfo(`Ran Sync Check : ${message}`);
     }
 
-    //const handleSync = async () => {}
+    const handleSync = async () => {
+        await updateGithubAppCard(githubData, miroAppCardId);
+        await getAppCardData();
+    }
 
     const getAppCardData = async () => {
         const miroUserId = await miro.board.getUserInfo().then((res: any) => res.id);
@@ -117,7 +124,7 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     React.useEffect(() => {
         if (fieldData && title && reviewers && description) {
             setIsLoading(false);
-        }
+        } 
     }, [fieldData, title, reviewers, description]);
 
     return (
@@ -138,12 +145,12 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
                                 Check Sync Status
                             </button>
                             :
-                            <button type="button" style={{backgroundColor: "green"}} className="button button-primary">
+                            <button type="button" style={{backgroundColor: "green"}} className="button button-primary" onClick={handleSync}>
                                 Sync Pull Request
                             </button>
                         }
                         <button type="button" className="button button-third">
-                            Add Approver
+                            Reserve Your Review
                         </button>
                     </div>
                 </div>

@@ -75,3 +75,22 @@ export const updateGithubAppCards = async (pullRequestMappings: PullRequestMappi
         })
       );
 }
+
+export const updateGithubAppCard = async (githubData: any, miroAppCardId: string) => {
+    const createdAtDaysAgo = new Date();
+    createdAtDaysAgo.setDate(createdAtDaysAgo.getDate() - parseInt(githubData.values[0].value.replace('d', '')));
+    
+    const appCard = await miro.board.getById(miroAppCardId) as AppCard;
+    appCard.title = githubData.title;
+    appCard.fields = createFields({
+        createdAt: createdAtDaysAgo,
+        numFilesChanged: githubData.values[1].value,
+        additions: githubData.values[2].value,
+        deletions: githubData.values[3].value,
+        numComments: githubData.values[4].value,
+        customStatus: githubData.values[5].value,
+        reviews: githubData.reviews
+    });
+    
+    appCard.sync();
+}
