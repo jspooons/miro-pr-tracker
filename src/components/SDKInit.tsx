@@ -31,14 +31,14 @@ export const MiroSDKInit = () => {
 
       if (await miro.board.ui.canOpenModal()) {
         miro.board.ui.openModal({
-          url: `http://localhost:3000/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
+          url: `/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
           width: 520,
           height: 620,
         });
       } else {
         miro.board.ui.closeModal();
         miro.board.ui.openModal({
-          url: `http://localhost:3000/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
+          url: `/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
           width: 520,
           height: 620,
         });
