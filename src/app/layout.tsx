@@ -1,5 +1,6 @@
 'use client'
 
+import Script from "next/script"
 import { MiroSDKInit } from "../components/SDKInit"
 
 export default function RootLayout({
@@ -12,6 +13,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <Script
+          src="https://miro.com/app/static/sdk/v2/miro.js"
+          strategy="beforeInteractive"
+        />
         <MiroSDKInit />
         {children}
       </body>
