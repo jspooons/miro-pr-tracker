@@ -24,8 +24,8 @@ export const GitManager: React.FC = () => {
                 miroUserId,
                 gitToken
             });
-        } catch (error) {
-            console.log(error);
+        } catch (error: any) {
+            console.error(error.message);
         }
 
         setGitToken("");
