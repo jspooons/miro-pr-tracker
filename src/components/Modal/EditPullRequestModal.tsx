@@ -43,7 +43,6 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     }
 
     const flattenGithubFieldData = (githubFieldData: any) => {
-        console.log("GOLL",githubFieldData);
         return {
             title: githubFieldData.title,
             author: githubFieldData.author,
@@ -130,7 +129,6 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
         const miroUserId = await miro.board.getUserInfo().then((res: any) => res.id);
 
         if (isMiroReviewer) {
-            console.log("HELLO", miroUserId, miroAppCardId);
             await axios.delete(`/api/reservation?miroUserId=${miroUserId}&miroAppCardId=${miroAppCardId}`);
             setIsMiroReviewer(false);
             setMiroReviewers(miroReviewers.filter((reviewer: MiroReviewer) => reviewer.id !== miroUserId));
@@ -141,8 +139,20 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
         }
     }
 
+    const getMiroReviewers = async () => {
+        const miroUserId = await miro.board.getUserInfo().then((res: any) => res.id);
+        const miroReviewers = await axios.get(`/api/reservation?miroAppCardId=${miroAppCardId}`);
+        const miroReviewersData = miroReviewers.data;
+
+        console.log("MMMDATA",miroReviewersData)
+
+        setIsMiroReviewer(miroReviewersData.some((reviewer: any) => reviewer.miroUserId === miroUserId));
+        setMiroReviewers(miroReviewersData.map((reviewer: any) => ({ name: reviewer.miroUsername, id: reviewer.miroUserId })));
+    }
+
     React.useEffect(() => {
         getAppCardData();
+        getMiroReviewers();
       }, [miroAppCardId]);
 
     React.useEffect(() => {

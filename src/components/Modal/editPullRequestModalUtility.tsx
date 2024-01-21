@@ -108,7 +108,7 @@ export const Reviewers = ({reviewers}: {reviewers: any}) => {
 
 export const MiroReviewers = ({miroReviewers}: {miroReviewers: any}) => {
 
-    
+    console.log("Miro Reviewers", miroReviewers);
 
     return (
         <div>

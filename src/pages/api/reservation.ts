@@ -33,29 +33,16 @@ export default async function handler(request: NextApiRequest, response: NextApi
     try {
         if (request.method === 'GET') {
 
-            if (request.query.miroUserId === undefined) {
-                const reservations = await prisma.reviewReservation.findMany({
-                    where: { miroAppCardId: request.query.miroAppCardId as string }
-                });
-
-                response.status(200).send(reservations);
-            } 
-
-            const reservation = await prisma.reviewReservation.findUnique({
-                where: {
-                    miroAppCardId_miroUserId: {
-                        miroAppCardId: request.query.miroAppCardId as string,
-                        miroUserId: request.query.miroUserId as string
-                    }
-                }
+            const reservations = await prisma.reviewReservation.findMany({
+                where: { miroAppCardId: request.query.miroAppCardId as string }
             });
 
-            response.status(200).send(reservation);
+            response.status(200).send(reservations);
 
         } else if (request.method === 'PUT') {
             const miroUserId = validateStringParam(request.query.miroUserId, 'miroUserId');
             const miroAppCardId = validateStringParam(request.query.miroAppCardId, 'miroAppCardId');
-            const miroUsername = validateStringParam(request.query.miroAppCardId, 'miroUsername');
+            const miroUsername = validateStringParam(request.query.miroUsername, 'miroUsername');
 
             const reservation = await prisma.reviewReservation.upsert({
                 where: {
