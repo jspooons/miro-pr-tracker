@@ -14,8 +14,8 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-// @ts-ignore
-export default function Main({ repoOwner, repoOwnerType, miroUserId }) {
+
+export default function Main({ repoOwner, repoOwnerType, miroUserId }: any) {
 
   return (
     <>

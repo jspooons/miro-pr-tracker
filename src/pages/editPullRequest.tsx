@@ -13,8 +13,7 @@ export async function getServerSideProps(context: any) {
   };
 }
 
-// @ts-ignore
-export default function Main({ miroAppCardId }) {
+export default function Main({ miroAppCardId }: any) {
   
   return (
     <>
