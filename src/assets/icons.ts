@@ -10,3 +10,4 @@ export const CLOSED = "https://cdn-icons-png.flaticon.com/512/10990/10990611.png
 export const NO_REVIEW = "https://cdn-icons-png.flaticon.com/512/11441/11441066.png";
 export const IN_REVIEW = "https://cdn-icons-png.flaticon.com/512/428/428094.png";
 export const MERGED = "https://cdn-icons-png.flaticon.com/512/6577/6577243.png";
+export const MIRO = "https://files.readme.io/17d4a23-miro-logo-color-square.png";

@@ -33,6 +33,7 @@ export const PullRequestManager: React.FC = () => {
     const getRepositoryOwners = async () => {
         const miroBoardId = (await miro.board.getInfo()).id;
         const results = await axios.get(`/api/repositories/owners?miroBoardId=${miroBoardId}`);
+
         setRepoOwners(results.data);
         setSelectedRepoOwner(results.data[0]);
     };
@@ -43,11 +44,14 @@ export const PullRequestManager: React.FC = () => {
 
     return (
         <div>
-            <Image src={addPullRequests} alt="" />
-            <p className="paragraph">The organisations and users that you are tracking can be found here. Select one repository owner and click the 'Select Pull Requests' button to select to open a pop-up where you will be able to select various pull requests to track under different repositories.</p>
+            <Image className="main-img" src={addPullRequests} alt="" />
+            <p className="paragraph">The organisations and users that you are tracking can be found here. Select one repository owner and click the 'Select Pull Requests' button to open a pop-up where you will be able to select various pull requests to track under different repositories.</p>
             <div>
             { repoOwners ? 
-                <div className="table-container">
+                repoOwners.length === 0 ?
+                <h3 style={{"textAlign": "justify"}}>You are not tracking any repository owners. Go to the 'Add Owners' tab to add a repository owner to track.</h3>
+                :
+                <div className="table-container" style={{paddingBottom: "20px"}}>
                     <table className="table">
                         <thead>
                             <tr>

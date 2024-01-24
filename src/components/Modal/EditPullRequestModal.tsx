@@ -8,7 +8,7 @@ import { EditPullRequestModalProps } from '../types';
 import { AppCard } from '@mirohq/websdk-types';
 import { getDaysSincePullRequestCreation } from '../../utils/appCardFieldsUtility';
 
-import { Changes, Description, Info, MiroReviewers, Reviewers, Status, getFieldValueDecisionFromIconUrl } from './editPullRequestModalUtility';
+import { Changes, Description, Info, MiroReviewers, Reviewers, Status, getFieldValueDecisionFromIconUrl } from '../utility/editPullRequestModalUtility';
 import { updateGithubAppCard } from '../utility/appCardsUtility';
 
 
@@ -109,6 +109,7 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
     const handleSync = async () => {
         await updateGithubAppCard(githubData, miroAppCardId);
         await getAppCardData();
+        setCanSync(false);
     }
 
     const getAppCardData = async () => {
@@ -173,7 +174,6 @@ export const EditPullRequestModal: React.FC<EditPullRequestModalProps> = ( { mir
                         <Status status={fieldData[5].value}/>
                         <Reviewers reviewers={reviewers}/>
                         <MiroReviewers miroReviewers={miroReviewers}/>
-                        <></>
                         { !canSync ?
                             <button type="button" className="button button-primary" onClick={handleCheckSync}>
                                 Check Sync Status

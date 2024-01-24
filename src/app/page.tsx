@@ -31,32 +31,34 @@ export default function Page() {
   return (
     <div id="root">
         <div className="=cs1 ce12">
-        <div className="tabs">
-            <div className="tabs-header-list">
-            <div
-                tabIndex={0}
-                className={`tab ${selectedTab === "github" && "tab-active"}`}
-                onClick={() => handleSelectTab("github")}
-            >
-                <div className="tab-text tab-badge">Add Owners</div>
-            </div>
-            <div
-                tabIndex={0}
-                className={`tab ${selectedTab === "pullRequests" && "tab-active"}`}
-                onClick={() => handleSelectTab("pullRequests")}
-            >
-                <div className="tab-text tab-badge">Add Pr's</div>
-            </div>
-            <div
-                tabIndex={0}
-                className={`tab ${selectedTab === "sync" && "tab-active"}`}
-                onClick={() => handleSelectTab("sync")}
-            >
-                <div className="tab-text tab-badge">Sync Pr's</div>
-            </div>
-            </div>
-        </div>
-        {renderTab()}
+          <div className="tabs" style={{ position: 'sticky', top: 0, zIndex: 1 }}>
+              <div className="tabs-header-list">
+              <div
+                  tabIndex={0}
+                  className={`tab ${selectedTab === "github" && "tab-active"}`}
+                  onClick={() => handleSelectTab("github")}
+              >
+                  <div className="tab-text tab-badge">Add Owners</div>
+              </div>
+              <div
+                  tabIndex={0}
+                  className={`tab ${selectedTab === "pullRequests" && "tab-active"}`}
+                  onClick={() => handleSelectTab("pullRequests")}
+              >
+                  <div className="tab-text tab-badge">Add Pr's</div>
+              </div>
+              <div
+                  tabIndex={0}
+                  className={`tab ${selectedTab === "sync" && "tab-active"}`}
+                  onClick={() => handleSelectTab("sync")}
+              >
+                  <div className="tab-text tab-badge">Sync Pr's</div>
+              </div>
+              </div>
+          </div>
+          <div>
+              {renderTab()}
+          </div>
         </div>
     </div>
   );

@@ -12,7 +12,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body style={{ display: "flex", flexDirection: "column", height: "100vh", flex: "1 1 auto", overflowY: "auto"  }}>
         <Script
           src="https://miro.com/app/static/sdk/v2/miro.js"
           strategy="beforeInteractive"

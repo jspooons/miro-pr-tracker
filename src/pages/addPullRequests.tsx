@@ -18,12 +18,8 @@ export async function getServerSideProps(context: any) {
 export default function Main({ repoOwner, repoOwnerType, miroUserId }: any) {
 
   return (
-    <>
-      <div className="container">
-        <div>
-          <AddPullRequestsModal repoOwner={repoOwner} repoOwnerType={repoOwnerType} miroUserId={miroUserId}/>
-        </div>
-      </div>
-    </>
+    <div>
+      <AddPullRequestsModal repoOwner={repoOwner} repoOwnerType={repoOwnerType} miroUserId={miroUserId}/>
+    </div>
   );
 };

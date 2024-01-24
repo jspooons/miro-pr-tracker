@@ -66,7 +66,7 @@ export const Info = ({numComments} : {numComments: string}) => {
         <div className="div3">
             <h3 className="subheader">Information</h3>
             <p className="description">
-                This Pull Request has 
+                {"This Pull Request has "}
                 <span className="comments"><img className="icon" src={icons.COMMENTS}/>{numComments} comments</span>
             </p>
     </div>
@@ -82,7 +82,7 @@ export const Status = ({status}: {status: string}) => {
         <div className="div4">
             <h3 className="subheader">Status</h3>
             <p className="description">
-                The status of the pull request as seen on Github is 
+                {"The status of the pull request as seen on Github: "}
                 <span className={clazzName}><img className="icon" src={icon}/>{status}</span>
             </p>
         </div>
@@ -115,7 +115,7 @@ export const MiroReviewers = ({miroReviewers}: {miroReviewers: any}) => {
                 <ul>
                     {miroReviewers.map((reviewer: any) => (
                         <li>
-                            <span className="default-option" style={{color: "darkblue", backgroundColor: "cyan"}}>Miro:{reviewer.name}</span>
+                            <span className="default-option" style={{color: "darkblue", backgroundColor: "cyan"}}><img className="icon" src={icons.MIRO}/>{reviewer.name}</span>
                         </li>
                     ))}
                 </ul>

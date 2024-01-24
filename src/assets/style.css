@@ -10,7 +10,6 @@ body {
   height: 100%;
   line-height: 1.5;
   margin: 0;
-  display: flex;
 }
 
 #root {
@@ -19,14 +18,14 @@ body {
   padding: var(--space-medium);
 }
 
-img {
+p {
+  margin: 0;
+}
+
+.main-img {
   max-width: 100%;
   height: auto;
   margin-top: 20px;
-}
-
-p {
-  margin: 0;
 }
 
 /*
@@ -113,6 +112,10 @@ p {
 
 */
 
+.select-container {
+  width: 100%;
+}
+
 .select {
   margin-top: 10px;
 }
@@ -127,10 +130,6 @@ p {
   max-height: 380px;
   width: 100%;
   overflow-y: auto;
-}
-
-.modal-container {
-  width: 100%;
 }
 
 /*
@@ -285,3 +284,26 @@ p {
 .div5 { grid-area: 4 / 1 / 5 / 2; transform: translateY(-40px);}
 .div6 { grid-area: 4 / 2 / 5 / 3; transform: translateY(-40px);}
 
+/* 
+
+  list
+
+*/
+
+li {
+  list-style-type: none; /* Remove default bullet point */
+  position: relative; /* Allow positioning of pseudo-element relative to the li */
+}
+
+li::before {
+  content: ""; /* Necessary for the pseudo-element to be displayed */
+  position: absolute;
+  left: -1.5em; /* Position the square to the left of the text */
+  top: 50%; /* Position the top edge of the square in the middle of the li */
+  transform: translateY(-50%); /* Shift the square up by half its height */
+  width: 10px; /* Adjust as needed */
+  height: 10px; /* Adjust as needed */
+  background-color: rgb(54, 152, 198);
+  opacity: 0.5; /* Set opacity to 50% */
+  border-radius: 3px; /* Round the corners */
+}

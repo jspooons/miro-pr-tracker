@@ -4,8 +4,8 @@ import axios from 'axios';
 
 import '../../assets/style.css'
 
-import Select from '../utility/Select';
-import Checkbox from '../utility/Checkbox';
+import Select from '../base/Select';
+import Checkbox from '../base/Checkbox';
 import { GithubRepo, GithubPullRequest, AddPullRequestModalProps } from '../types';
 import { insertGithubAppCards } from '../utility/appCardsUtility';
 
@@ -65,13 +65,13 @@ export const AddPullRequestsModal: React.FC<AddPullRequestModalProps> = ( { repo
     };
 
     return (
-        <div>
+        <div className="modal-container" style={{display: "flex", width: "100%", height: "100%", flexDirection: "column"}}>
             <h2>Choose from Github</h2>
             {isLoading ? 
                 <div className="central-spinner-container"><div className="spinner"></div></div> : 
                 <>
                     <Select
-                        label="Select Github Pull Request"
+                        label="Select Github Repository"
                         required={false}
                         options={githubRepositories}
                         onChange={handleSelectChange}

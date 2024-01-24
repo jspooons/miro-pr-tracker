@@ -19,7 +19,7 @@ export const SyncPullRequestsManager: React.FC = () => {
     
     return (
         <div>
-            <Image src={syncPrs} alt="" />
+            <Image className="main-img" src={syncPrs} alt="" />
             <p className="paragraph">If you have made changes to your pull requests directly on Github you need to click the 'Sync now' button to keep your board up to date!</p>
             <hr/>
                 <button

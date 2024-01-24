@@ -32,7 +32,7 @@ export const MiroSDKInit = () => {
       miro.board.ui.openModal({
         url: `/editPullRequest?miroAppCardId=${appCard.id}&currentStatus=${currentStatus}`,
         width: 520,
-        height: 620,
+        height: 600,
       });
     });
   });

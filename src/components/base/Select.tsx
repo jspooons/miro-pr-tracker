@@ -16,7 +16,7 @@ const Select = ({
   onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
 }) => {
   return (
-    <div className="select-container">
+    <div className="select-container" style={{width:"100%"}}>
       <label className="select-label">
         {label} {required && <span>*</span>}
       </label>

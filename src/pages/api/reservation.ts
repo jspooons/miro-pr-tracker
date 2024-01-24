@@ -83,7 +83,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
                         }
                     });
 
-                    console.log('Review created successfully:', gitResponse.data);
+                    console.log('Review created successfully for:', gitResponse.data.user.login);
                 } catch (error: any) {
                     console.error('Error creating review:', error.response ? error.response.data : error.message);
                 }

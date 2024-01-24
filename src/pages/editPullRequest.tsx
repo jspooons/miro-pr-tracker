@@ -16,10 +16,8 @@ export async function getServerSideProps(context: any) {
 export default function Main({ miroAppCardId }: any) {
   
   return (
-    <>
-      <div>
-          <EditPullRequestModal miroAppCardId={miroAppCardId as string}/>
-      </div>
-    </>
+    <div>
+        <EditPullRequestModal miroAppCardId={miroAppCardId as string}/>
+    </div>
   );
 };
