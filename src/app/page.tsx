@@ -30,7 +30,7 @@ export default function Page() {
 
   return (
     <div id="root">
-        <div className="=cs1 ce12">
+        <div className="=cs1 ce12" style={{ height: "100%", display: "flex", flexDirection: "column" }}>
           <div className="tabs">
               <div className="tabs-header-list">
               <div
@@ -56,8 +56,11 @@ export default function Page() {
               </div>
               </div>
           </div>
-          <div>
+          <div className="scrollable">
               {renderTab()}
+          </div>
+          <div className="cs1 ce12 settings-cog">
+            <button className="button-icon icon-settings" type="button"></button>
           </div>
         </div>
     </div>
