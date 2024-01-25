@@ -329,4 +329,5 @@ li::before {
   align-self: flex-end;
   width: 100%;
   background-color: white;
+  margin-top: var(--space-small);
 }
