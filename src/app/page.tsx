@@ -31,7 +31,7 @@ export default function Page() {
   return (
     <div id="root">
         <div className="=cs1 ce12">
-          <div className="tabs" style={{ position: 'sticky', top: 0, zIndex: 1 }}>
+          <div className="tabs">
               <div className="tabs-header-list">
               <div
                   tabIndex={0}

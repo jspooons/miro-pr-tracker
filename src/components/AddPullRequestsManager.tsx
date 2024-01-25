@@ -7,6 +7,7 @@ import '../assets/style.css';
 import addPullRequests from '../assets/addPullRequests.png';
 import axios from 'axios';
 import { RepoOwner } from './types';
+import { addDefaultKanbanBoard, } from './utility/addKanbanBoard';
 
 
 export const PullRequestManager: React.FC = () => {
@@ -36,6 +37,10 @@ export const PullRequestManager: React.FC = () => {
 
         setRepoOwners(results.data);
         setSelectedRepoOwner(results.data[0]);
+    };
+
+    const handleAddBoard = async () => {
+        await addDefaultKanbanBoard("Pull Request Tracker");
     };
 
     React.useEffect(() => {
@@ -96,6 +101,13 @@ export const PullRequestManager: React.FC = () => {
                 onClick={handleClick}
             >
                 Select Pull Requests
+            </button>
+            <button
+                className="cs1 ce12 button button-secondary"
+                type="button"
+                onClick={handleAddBoard}
+            >
+                Add Kanban Board
             </button>
         </div>
     );
